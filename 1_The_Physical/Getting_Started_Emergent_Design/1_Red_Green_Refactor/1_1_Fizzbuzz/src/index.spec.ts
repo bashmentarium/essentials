@@ -11,4 +11,9 @@ describe("fizzbuzz", () => {
     expect(fizzBuzz(-5)).toBe(undefined);
     expect(fizzBuzz(101)).toBe(undefined);
   });
+
+  test("returns 'Fizz' if input number is a multiple of 3", () => {
+    expect(fizzBuzz(3)).toBe("Fizz");
+    expect(fizzBuzz(7)).toBe("7");
+  });
 });
