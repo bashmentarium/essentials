@@ -18,4 +18,10 @@ describe("palindrome checker", () => {
 
     expect(palindromeChecker.isAPalindrome("Mom")).toBeTruthy();
   });
+
+  test("should be able to tell a palindrome regardless of spacings", () => {
+    const palindromeChecker = new PalindromeChecker();
+
+    expect(palindromeChecker.isAPalindrome("Was It A Rat I Saw")).toBeTruthy();
+  });
 });
