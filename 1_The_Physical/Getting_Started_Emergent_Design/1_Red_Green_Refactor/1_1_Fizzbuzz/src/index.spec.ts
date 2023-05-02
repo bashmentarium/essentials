@@ -20,4 +20,8 @@ describe("fizzbuzz", () => {
   test("returns 'Buzz' if input number is a multiple of 5", () => {
     expect(fizzBuzz(5)).toBe("Buzz");
   });
+
+  test("return 'FizzBuzz' if input number is a multiple of both 3 and 5", () => {
+    expect(fizzBuzz(15)).toBe("FizzBuzz");
+  });
 });
