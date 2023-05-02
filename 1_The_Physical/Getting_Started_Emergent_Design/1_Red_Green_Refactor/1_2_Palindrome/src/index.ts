@@ -1,5 +1,7 @@
 export class PalindromeChecker {
   isAPalindrome(str: string): boolean {
-    return true;
+    const reversed = str.split("").reverse().join("");
+
+    return reversed === str;
   }
 }
