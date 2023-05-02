@@ -1,11 +1,15 @@
 export function fizzBuzz(number: number) {
-  if (number <= 100 && number >= 1) {
-    if (number % 5 === 0 && number % 3 === 0) {
+  const isInRange = number <= 100 && number >= 1;
+  const isMultipleOf5 = number % 5 === 0;
+  const isMultipleOf3 = number % 3 === 0;
+
+  if (isInRange) {
+    if (isMultipleOf3 && isMultipleOf5) {
       return "FizzBuzz";
-    } else if (number % 5 === 0) {
-      return "Buzz";
-    } else if (number % 3 === 0) {
+    } else if (isMultipleOf3) {
       return "Fizz";
+    } else if (isMultipleOf5) {
+      return "Buzz";
     } else {
       return number.toString();
     }
