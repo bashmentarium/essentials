@@ -2,6 +2,6 @@ export class PalindromeChecker {
   isAPalindrome(str: string): boolean {
     const reversed = str.split("").reverse().join("");
 
-    return reversed === str;
+    return reversed.toLowerCase() === str.toLowerCase();
   }
 }

@@ -12,4 +12,10 @@ describe("palindrome checker", () => {
 
     expect(palindromeChecker.isAPalindrome("bill")).toBeFalsy();
   });
+
+  test("should be able to tell if palindrome regardless of the casing", () => {
+    const palindromeChecker = new PalindromeChecker();
+
+    expect(palindromeChecker.isAPalindrome("Mom")).toBeTruthy();
+  });
 });
