@@ -1,17 +1,16 @@
-export function fizzBuzz(number: number) {
-  const isInRange = number <= 100 && number >= 1;
-  const isMultipleOf5 = number % 5 === 0;
-  const isMultipleOf3 = number % 3 === 0;
+export function fizzBuzz(num: number) {
+  const isMultipleOf5 = (num: number) => {
+    return num % 5 === 0;
+  };
 
-  if (isInRange) {
-    if (isMultipleOf3 && isMultipleOf5) {
-      return "FizzBuzz";
-    } else if (isMultipleOf3) {
-      return "Fizz";
-    } else if (isMultipleOf5) {
-      return "Buzz";
-    } else {
-      return number.toString();
-    }
-  }
+  const isMultipleOf3 = (num: number) => {
+    return num % 3 === 0;
+  };
+
+  if (num < 1) throw new Error("Too small!");
+  if (num > 100) throw new Error("Too large!");
+  if (isMultipleOf3(num) && isMultipleOf5(num)) return "FizzBuzz";
+  if (isMultipleOf3(num)) return "Fizz";
+  if (isMultipleOf5(num)) return "Buzz";
+  return num.toString();
 }

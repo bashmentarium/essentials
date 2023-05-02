@@ -7,9 +7,8 @@ describe("fizzbuzz", () => {
 
   test("takes a number from 1 to 100 as an argument and outputs it as a string", () => {
     expect(fizzBuzz(11)).toBe("11");
-    expect(fizzBuzz(0)).toBe(undefined);
-    expect(fizzBuzz(-5)).toBe(undefined);
-    expect(fizzBuzz(101)).toBe(undefined);
+    expect(() => fizzBuzz(0)).toThrow("Too small!");
+    expect(() => fizzBuzz(101)).toThrow("Too large!");
   });
 
   test("returns 'Fizz' if input number is a multiple of 3", () => {
