@@ -23,5 +23,6 @@ describe("palindrome checker", () => {
     const palindromeChecker = new PalindromeChecker();
 
     expect(palindromeChecker.isAPalindrome("Was It A Rat I Saw")).toBeTruthy();
+    expect(palindromeChecker.isAPalindrome("Never Odd or Even")).toBeTruthy();
   });
 });
