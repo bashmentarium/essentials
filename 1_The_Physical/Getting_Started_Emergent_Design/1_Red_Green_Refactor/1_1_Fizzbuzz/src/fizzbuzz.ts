@@ -1,3 +1,5 @@
 export function fizzBuzz(number: number) {
-  return "";
+  if (number <= 100 && number >= 1) {
+    return number.toString();
+  }
 }
