@@ -1,6 +1,12 @@
 import { MilitaryTimeValidator } from "./index";
 
 describe("military time validator", () => {
+  it('knows that "01:00 - 11:00" is a valid military time', () => {
+    const militaryTimeValidator = new MilitaryTimeValidator();
+
+    expect(militaryTimeValidator.validate("01:00 - 11:00")).toBeTruthy();
+  });
+
   test("knows that an empty string is not a valid time", () => {
     const militaryTimeValidator = new MilitaryTimeValidator();
 
