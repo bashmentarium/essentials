@@ -1,4 +1,4 @@
-import { PasswordChecker } from "./index";
+import { PasswordChecker, CheckPasswordResponse } from "./index";
 
 describe("password validator", () => {
   let passwordChecker: PasswordChecker;
@@ -7,37 +7,54 @@ describe("password validator", () => {
     passwordChecker = new PasswordChecker();
   });
 
-  test("exists", () => {
-    expect(passwordChecker.checkPassword("mo7herS")).toBeTruthy();
-  });
-
   test("returns an invalid length error when strings like 'mom' are less than 5 characters", () => {
-    expect(passwordChecker.checkPassword("mom")).toBe("InvalidLengthError");
+    let response: CheckPasswordResponse;
+
+    response = passwordChecker.checkPassword("mom");
+
+    expect(response.result).toBeFalsy();
+    expect(response.errors.length).toBeGreaterThanOrEqual(1);
+    expect(response.errors).toContain("InvalidLengthError");
   });
 
   test("returns an invalid length error when strings like 'dsadnwdqdwijdqwdiqjwd' are more than 15 characters", () => {
-    expect(passwordChecker.checkPassword("dsadnwdqdwijdqwdiqjwd")).toBe(
-      "InvalidLengthError"
-    );
+    let response: CheckPasswordResponse;
+
+    response = passwordChecker.checkPassword("dsadnwdqdwijdqwdiqjwd");
+
+    expect(response.result).toBeFalsy();
+    expect(response.errors.length).toBeGreaterThanOrEqual(1);
+    expect(response.errors).toContain("InvalidLengthError");
   });
 
-  test("returns a true value if the password contains a number", () => {
-    expect(passwordChecker.checkPassword("str8from")).toBeTruthy();
+  it('returns an error if words like "mo7hers" dont contain at least one uppercase character', () => {
+    let response: CheckPasswordResponse;
+
+    response = passwordChecker.checkPassword("mo7hers");
+
+    expect(response.result).toBeFalsy();
+    expect(response.errors.length).toBeGreaterThanOrEqual(1);
+    expect(response.errors).toContain("NoUppercaseError");
   });
 
-  test("returns a missing digits error if the password doesn't contain a number", () => {
-    expect(passwordChecker.checkPassword("lalalalala")).toBe(
-      "MissingDigitError"
-    );
+  it('returns a successful response if words like "Mo7hers" contain at least one uppercase character', () => {
+    let response: CheckPasswordResponse;
+
+    response = passwordChecker.checkPassword("Mo7hers");
+
+    expect(response.result).toBeTruthy();
+    expect(response.errors.length).toBeGreaterThanOrEqual(0);
   });
 
-  test("returns a true value if the password contains an uppercase letter", () => {
-    expect(passwordChecker.checkPassword("Str8from")).toBeTruthy();
-  });
+  it('returns multiple errors when there is no uppercase and no number and invalid length like in "ab"', () => {
+    let response: CheckPasswordResponse;
 
-  test("returns a no uppercase error if the password doesn't contain an uppercase letter", () => {
-    expect(passwordChecker.checkPassword("lalal6lala")).toBe(
-      "NoUppercaseError"
-    );
+    response = passwordChecker.checkPassword("ab");
+
+    expect(response.result).toBeFalsy();
+    expect(response.errors.length).toEqual(3);
+    expect(response.errors).toContain("NoUppercaseError");
+    expect(response.errors).toContain("MissingDigitError");
+    expect(response.errors).toContain("InvalidLengthError");
   });
 });
