@@ -4,5 +4,7 @@
 
 Write a class for validating time:
 
-- Must be a time range
-- One time value can have values 00-23 and 00-59.
+- returns false if invalid format
+- returns true if valid format
+- hours cannot be less than 0 and greater than 23
+- minutes cannot be less than 0 and greater than 59
