@@ -20,4 +20,8 @@ describe("password validator", () => {
       "InvalidLengthError"
     );
   });
+
+  test("returns a true value if the password contains a number", () => {
+    expect(passwordChecker.checkPassword("str8from")).toBeTruthy();
+  });
 });
