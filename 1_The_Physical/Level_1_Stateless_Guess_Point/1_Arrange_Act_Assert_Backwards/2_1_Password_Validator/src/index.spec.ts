@@ -24,4 +24,20 @@ describe("password validator", () => {
   test("returns a true value if the password contains a number", () => {
     expect(passwordChecker.checkPassword("str8from")).toBeTruthy();
   });
+
+  test("returns a missing digits error if the password doesn't contain a number", () => {
+    expect(passwordChecker.checkPassword("lalalalala")).toBe(
+      "MissingDigitError"
+    );
+  });
+
+  test("returns a true value if the password contains an uppercase letter", () => {
+    expect(passwordChecker.checkPassword("Str8from")).toBeTruthy();
+  });
+
+  test("returns a no uppercase error if the password doesn't contain an uppercase letter", () => {
+    expect(passwordChecker.checkPassword("lalal6lala")).toBe(
+      "NoUppercaseError"
+    );
+  });
 });
