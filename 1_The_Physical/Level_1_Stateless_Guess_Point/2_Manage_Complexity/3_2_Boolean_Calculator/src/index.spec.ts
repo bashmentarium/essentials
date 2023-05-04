@@ -8,11 +8,20 @@ describe("boolean calculator", () => {
     expect(booleanCalculator.evaluate("FALSE")).toBeFalsy();
   });
 
-  test("evaluates single value negation", () => {
+  test("evaluates single value negations 'NOT TRUE' and 'NOT FALSE'", () => {
     const booleanCalculator = new BooleanCalculator();
 
     expect(booleanCalculator.evaluate("NOT TRUE")).toBeFalsy();
     expect(booleanCalculator.evaluate("NOT FALSE")).toBeTruthy();
+  });
+
+  test("evaluates only valid expressions", () => {
+    const booleanCalculator = new BooleanCalculator();
+
+    expect(booleanCalculator.evaluate("TRUE AND TRUE")).toBeTruthy();
+    expect(() => booleanCalculator.evaluate("eeaaTRUE AND eeeeTRUE")).toThrow(
+      "Invalid Boolean expression!"
+    );
   });
 
   test("knows that 'ASDJEWEK' is an invalid boolean expression", () => {
