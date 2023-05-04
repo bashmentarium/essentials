@@ -19,8 +19,12 @@ describe("military time validator", () => {
     expect(militaryTimeValidator.validate("02:00 - 04:00")).toBeTruthy();
   });
 
-  test("knows that that start time cannot be later than end time", () => {
+  test("knows that the start time hours cannot be later than end time hours", () => {
     expect(militaryTimeValidator.validate("02:00 - 01:00")).toBeFalsy();
+  });
+
+  test("know that when the time period is less than an hour, the starting minutes cannot be later than the ending minutes.", () => {
+    expect(militaryTimeValidator.validate("01:15 - 01:05")).toBeFalsy();
   });
 
   test("knows that an empty string is not a valid time", () => {
