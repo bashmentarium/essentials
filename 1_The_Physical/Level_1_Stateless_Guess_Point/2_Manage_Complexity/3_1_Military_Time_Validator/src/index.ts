@@ -1,4 +1,5 @@
 const maxHours = 24;
+const maxMinutes = 60;
 
 const leftSide = (text: string) => text.split(" - ")[0];
 const rightSide = (text: string) => text.split(" - ")[1];
@@ -20,6 +21,12 @@ export class MilitaryTimeValidator {
       return false;
 
     if (hours(leftSide(text)) > maxHours || hours(rightSide(text)) > maxHours)
+      return false;
+
+    if (
+      minutes(leftSide(text)) > maxMinutes ||
+      minutes(rightSide(text)) > maxMinutes
+    )
       return false;
 
     return true;
