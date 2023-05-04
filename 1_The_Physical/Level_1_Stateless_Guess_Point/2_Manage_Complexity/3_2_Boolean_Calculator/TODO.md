@@ -8,6 +8,4 @@
   - AND
   - OR
 - take parenthesis into consideration (highest precedence)
-
-possible improvement
-show the position that causes the error in the provided string
+- if valid, compares only betweet TRUE and FALSE values.
