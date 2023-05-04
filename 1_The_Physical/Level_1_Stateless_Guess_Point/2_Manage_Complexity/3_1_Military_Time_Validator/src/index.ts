@@ -33,6 +33,9 @@ export class MilitaryTimeValidator {
     if (hours(leftSide(text)) < minimum || hours(rightSide(text)) < minimum)
       return false;
 
+    if (minutes(leftSide(text)) < minimum || minutes(rightSide(text)) < minimum)
+      return false;
+
     return true;
   }
 }

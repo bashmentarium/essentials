@@ -43,6 +43,10 @@ describe("military time validator", () => {
     expect(militaryTimeValidator.validate("-12:00 - 13:50")).toBeFalsy();
   });
 
+  test("knows that negative values cannot be used as minutes", () => {
+    expect(militaryTimeValidator.validate("10:00 - 11:-50")).toBeFalsy();
+  });
+
   test("knows that '010011:00' is not a valid military time", () => {
     expect(militaryTimeValidator.validate("010011:00")).toBeFalsy();
   });
