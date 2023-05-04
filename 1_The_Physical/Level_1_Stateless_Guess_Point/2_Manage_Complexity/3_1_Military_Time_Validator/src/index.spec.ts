@@ -11,6 +11,18 @@ describe("military time validator", () => {
     expect(militaryTimeValidator.validate("01:00 - 11:00")).toBeTruthy();
   });
 
+  test("knows that left side is a valid military time", () => {
+    expect(militaryTimeValidator.validate("01:00 - 00w:00")).toBeTruthy();
+  });
+
+  test("knows that right side is a valid military time", () => {
+    expect(militaryTimeValidator.validate("02:00 - 04:00")).toBeTruthy();
+  });
+
+  test("knows that that start time cannot be later than end time", () => {
+    expect(militaryTimeValidator.validate("02:00 - 01:00")).toBeFalsy();
+  });
+
   test("knows that an empty string is not a valid time", () => {
     expect(militaryTimeValidator.validate("")).toBeFalsy();
   });
@@ -19,15 +31,15 @@ describe("military time validator", () => {
     expect(militaryTimeValidator.validate("010011:00")).toBeFalsy();
   });
 
-  it('knows that "0100- 1:00" is not a valid military time', () => {
+  test('knows that "0100- 1:00" is not a valid military time', () => {
     expect(militaryTimeValidator.validate("0100- 1:00")).toBeFalsy();
   });
 
-  it('knows that "1:00 - 0100" is not a valid military time', () => {
+  test('knows that "1:00 - 0100" is not a valid military time', () => {
     expect(militaryTimeValidator.validate("1:00 - 0100")).toBeFalsy();
   });
 
-  it('knows that "0100 - 01:00" is not a valid military time', () => {
+  test('knows that "0100 - 01:00" is not a valid military time', () => {
     expect(militaryTimeValidator.validate("0100 - 01:00")).toBeFalsy();
   });
 });
