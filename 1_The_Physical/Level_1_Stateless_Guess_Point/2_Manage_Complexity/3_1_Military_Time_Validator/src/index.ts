@@ -1,3 +1,4 @@
+const minimum = 0;
 const maxHours = 24;
 const maxMinutes = 60;
 
@@ -27,6 +28,9 @@ export class MilitaryTimeValidator {
       minutes(leftSide(text)) > maxMinutes ||
       minutes(rightSide(text)) > maxMinutes
     )
+      return false;
+
+    if (hours(leftSide(text)) < minimum || hours(rightSide(text)) < minimum)
       return false;
 
     return true;
