@@ -31,20 +31,20 @@ describe("military time validator", () => {
     expect(militaryTimeValidator.validate("")).toBeFalsy();
   });
 
-  test('knows that "25:15 - 26:14" is an impossible hours value', () => {
-    expect(militaryTimeValidator.validate("25:15 - 26:14")).toBeFalsy();
-  });
-
-  test('knows that "23:60 - 23:61" is an impossible minutes value', () => {
-    expect(militaryTimeValidator.validate("23:60 - 23:61")).toBeFalsy();
-  });
-
   test("knows that negative values cannot be used as hours", () => {
     expect(militaryTimeValidator.validate("-12:00 - 13:50")).toBeFalsy();
   });
 
   test("knows that negative values cannot be used as minutes", () => {
     expect(militaryTimeValidator.validate("10:00 - 11:-50")).toBeFalsy();
+  });
+
+  test('knows that "25:15 - 26:14" is an impossible hours value', () => {
+    expect(militaryTimeValidator.validate("25:15 - 26:14")).toBeFalsy();
+  });
+
+  test('knows that "23:60 - 23:61" is an impossible minutes value', () => {
+    expect(militaryTimeValidator.validate("23:60 - 23:61")).toBeFalsy();
   });
 
   test("knows that '010011:00' is not a valid military time", () => {
