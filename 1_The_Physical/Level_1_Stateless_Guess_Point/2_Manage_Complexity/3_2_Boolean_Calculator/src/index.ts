@@ -1,20 +1,8 @@
 const validValues = ["TRUE", "FALSE", "NOT", "AND", "OR"];
 const ERROR_MSG = "Invalid Boolean expression!";
 
-const validate = (text: string) => {
-  const isExpressionValid = text.split(" ").every((expression: string) => {
-    return validValues.indexOf(expression) >= 0;
-  });
-
-  if (isExpressionValid) {
-    return true;
-  } else {
-    throw new Error(ERROR_MSG);
-  }
-};
-
 export class BooleanCalculator {
-  public evaluate(text: string) {
+  public evaluate(text: string): boolean | string {
     if (text === "TRUE") return true;
     if (text === "FALSE") return false;
 
@@ -29,6 +17,16 @@ export class BooleanCalculator {
       throw new Error(ERROR_MSG);
     }
 
-    return validate(text);
+    const isExpressionValid: boolean = text
+      .split(" ")
+      .every((expression: string) => {
+        return validValues.indexOf(expression) >= 0;
+      });
+
+    if (isExpressionValid) {
+      return true;
+    } else {
+      throw new Error(ERROR_MSG);
+    }
   }
 }

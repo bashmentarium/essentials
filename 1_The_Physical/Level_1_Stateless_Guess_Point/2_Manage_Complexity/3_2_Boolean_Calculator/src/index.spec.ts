@@ -15,10 +15,13 @@ describe("boolean calculator", () => {
     expect(booleanCalculator.evaluate("NOT FALSE")).toBeTruthy();
   });
 
-  test("evaluates only valid expressions", () => {
+  test("evaluates only expressions that contain operators or boolean values", () => {
     const booleanCalculator = new BooleanCalculator();
 
-    expect(booleanCalculator.evaluate("TRUE AND TRUE")).toBeTruthy();
+    expect(booleanCalculator.evaluate("TRUE AND TRUE OR FALSE")).toBeTruthy();
+    expect(() => booleanCalculator.evaluate("GREEN OR TRUE")).toThrow(
+      "Invalid Boolean expression!"
+    );
     expect(() => booleanCalculator.evaluate("eeaaTRUE AND eeeeTRUE")).toThrow(
       "Invalid Boolean expression!"
     );
