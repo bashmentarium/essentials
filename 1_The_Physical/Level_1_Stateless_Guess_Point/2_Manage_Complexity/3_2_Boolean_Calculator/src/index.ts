@@ -19,23 +19,17 @@ export class BooleanCalculator {
     }
 
     const splitExpression = text.trim().split(" ");
+    const firstExpressionItem = splitExpression[0];
+    const lastExpressionItem = splitExpression[splitExpression.length - 1];
 
-    if (splitExpression[splitExpression.length - 1] === "NOT") {
-      throw new Error(ERROR_MSG);
-    }
-
-    if (splitExpression[0] === "AND") {
-      throw new Error(ERROR_MSG);
-    }
-
-    if (splitExpression[0] === "OR") {
+    if (firstExpressionItem === "AND" || firstExpressionItem === "OR") {
       throw new Error(ERROR_MSG);
     }
 
     if (
-      splitExpression[splitExpression.length - 1] === "NOT" ||
-      splitExpression[splitExpression.length - 1] === "AND" ||
-      splitExpression[splitExpression.length - 1] === "OR"
+      lastExpressionItem === "NOT" ||
+      lastExpressionItem === "AND" ||
+      lastExpressionItem === "OR"
     ) {
       throw new Error(ERROR_MSG);
     }
