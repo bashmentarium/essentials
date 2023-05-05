@@ -41,7 +41,14 @@ export class BooleanCalculator {
     );
 
     if (isExpressionValid) {
-      return true;
+      // Find the 'AND' operator
+      const operatorIndex = splitExpression.indexOf("AND");
+      // Find left side
+      const leftSideOperand = splitExpression[operatorIndex - 1] === "TRUE";
+      // Find right side
+      const rightSideOperand = splitExpression[operatorIndex + 1] === "TRUE";
+
+      return leftSideOperand && rightSideOperand;
     } else {
       throw new Error(ERROR_MSG);
     }

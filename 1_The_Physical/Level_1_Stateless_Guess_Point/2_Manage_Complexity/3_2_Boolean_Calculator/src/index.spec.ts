@@ -9,7 +9,7 @@ describe("boolean calculator", () => {
   });
 
   test("evaluates expressions that contain only valid operators and boolean values", () => {
-    expect(booleanCalculator.evaluate("TRUE AND TRUE OR FALSE")).toBeTruthy();
+    expect(booleanCalculator.evaluate("FALSE AND FALSE")).toBeFalsy();
     expect(() =>
       booleanCalculator.evaluate("GREEN OR TRUE AND ELEPHANT")
     ).toThrow(ERROR_MSG);
@@ -39,6 +39,10 @@ describe("boolean calculator", () => {
     expect(() => booleanCalculator.evaluate("TRUE AND FALSE OR NOT")).toThrow(
       ERROR_MSG
     );
+  });
+
+  test("knows how to evaluate the 'TRUE AND FALSE' expression", () => {
+    expect(booleanCalculator.evaluate("TRUE AND FALSE")).toBeFalsy();
   });
 
   test("knows that 'eeaaTRUE AND eeeeTRUE' is an invalid expression", () => {
