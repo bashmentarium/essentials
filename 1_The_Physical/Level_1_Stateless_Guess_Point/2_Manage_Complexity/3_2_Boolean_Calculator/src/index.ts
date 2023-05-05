@@ -17,11 +17,25 @@ export class BooleanCalculator {
       throw new Error(ERROR_MSG);
     }
 
-    const isExpressionValid: boolean = text
-      .split(" ")
-      .every((expression: string) => {
+    const splitExpression = text.split(" ");
+
+    if (splitExpression[splitExpression.length - 1] === "NOT") {
+      throw new Error(ERROR_MSG);
+    }
+
+    if (splitExpression && splitExpression[0] === "AND") {
+      throw new Error(ERROR_MSG);
+    }
+
+    if (splitExpression && splitExpression[0] === "OR") {
+      throw new Error(ERROR_MSG);
+    }
+
+    const isExpressionValid: boolean = splitExpression.every(
+      (expression: string) => {
         return validValues.indexOf(expression) >= 0;
-      });
+      }
+    );
 
     if (isExpressionValid) {
       return true;
