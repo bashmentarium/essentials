@@ -40,6 +40,12 @@ describe("boolean calculator", () => {
     );
   });
 
+  test("knows that an expression cannot end with an operator", () => {
+    expect(() => booleanCalculator.evaluate("FALSE AND FALSE OR")).toThrow(
+      ERROR_MSG
+    );
+  });
+
   test("knows that 'GREEN OR TRUE' is an invalid expression", () => {
     expect(() => booleanCalculator.evaluate("GREEN OR TRUE")).toThrow(
       ERROR_MSG
