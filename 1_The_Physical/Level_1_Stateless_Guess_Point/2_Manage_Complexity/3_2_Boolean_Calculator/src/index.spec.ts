@@ -22,6 +22,10 @@ describe("boolean calculator", () => {
     expect(booleanCalculator.evaluate("TRUE AND TRUE OR FALSE")).toBeTruthy();
   });
 
+  test("knows that an empty string is not a valid expression", () => {
+    expect(() => booleanCalculator.evaluate(" ")).toThrow(ERROR_MSG);
+  });
+
   test("knows that 'TRUE AND FALSE OR NOT' is an invalid expression", () => {
     expect(() => booleanCalculator.evaluate("TRUE AND FALSE OR NOT")).toThrow(
       ERROR_MSG

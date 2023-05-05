@@ -3,6 +3,7 @@ export const ERROR_MSG = "Invalid Boolean expression!";
 
 export class BooleanCalculator {
   public evaluate(text: string): boolean | string {
+    if (text.trim() === "") throw new Error(ERROR_MSG);
     if (text === "TRUE") return true;
     if (text === "FALSE") return false;
 
@@ -23,19 +24,18 @@ export class BooleanCalculator {
       throw new Error(ERROR_MSG);
     }
 
-    if (splitExpression && splitExpression[0] === "AND") {
+    if (splitExpression[0] === "AND") {
       throw new Error(ERROR_MSG);
     }
 
-    if (splitExpression && splitExpression[0] === "OR") {
+    if (splitExpression[0] === "OR") {
       throw new Error(ERROR_MSG);
     }
 
     if (
-      splitExpression &&
-      (splitExpression[splitExpression.length - 1] === "NOT" ||
-        splitExpression[splitExpression.length - 1] === "AND" ||
-        splitExpression[splitExpression.length - 1] === "OR")
+      splitExpression[splitExpression.length - 1] === "NOT" ||
+      splitExpression[splitExpression.length - 1] === "AND" ||
+      splitExpression[splitExpression.length - 1] === "OR"
     ) {
       throw new Error(ERROR_MSG);
     }
