@@ -1,5 +1,5 @@
 const validValues = ["TRUE", "FALSE", "NOT", "AND", "OR"];
-const ERROR_MSG = "Invalid Boolean expression!";
+export const ERROR_MSG = "Invalid Boolean expression!";
 
 export class BooleanCalculator {
   public evaluate(text: string): boolean | string {
