@@ -1,71 +1,55 @@
 export const ERROR_MSG = "Invalid Boolean expression!";
 const validValues = ["TRUE", "FALSE", "NOT", "AND", "OR"];
 
-function evaluateNegationOperators(expression: string[]): string[] {
+function evaluateOperators(expression: string[]): string[] {
   if (expression && expression.length > 1) {
+    const notOperatorIndex = expression.lastIndexOf("NOT");
+    const andOperatorIndex = expression.indexOf("AND");
+    const orOperatorIndex = expression.indexOf("OR");
     let singleEvaluatedExpression;
-    const operatorIndex = expression.lastIndexOf("NOT");
 
-    if (expression.lastIndexOf("NOT") >= 0) {
-      let operand = expression[operatorIndex + 1] === "TRUE";
+    if (notOperatorIndex >= 0) {
+      let operand = expression[notOperatorIndex + 1] === "TRUE";
 
       singleEvaluatedExpression = !operand;
 
       expression.splice(
-        operatorIndex,
+        notOperatorIndex,
         2,
         singleEvaluatedExpression.toString().toUpperCase()
       );
 
-      evaluateNegationOperators(expression);
+      evaluateOperators(expression);
     }
-  }
 
-  return expression;
-}
-
-function evaluateAndOperators(expression: string[]): string[] {
-  if (expression && expression.length > 1) {
-    let singleEvaluatedExpression;
-    const operatorIndex = expression.indexOf("AND");
-
-    if (expression.indexOf("AND") >= 0) {
-      const leftSideOperand = expression[operatorIndex - 1] === "TRUE";
-      const rightSideOperand = expression[operatorIndex + 1] === "TRUE";
+    if (andOperatorIndex >= 0) {
+      const leftSideOperand = expression[andOperatorIndex - 1] === "TRUE";
+      const rightSideOperand = expression[andOperatorIndex + 1] === "TRUE";
 
       singleEvaluatedExpression = leftSideOperand && rightSideOperand;
 
       expression.splice(
-        operatorIndex - 1,
+        andOperatorIndex - 1,
         3,
         singleEvaluatedExpression.toString().toUpperCase()
       );
 
-      evaluateAndOperators(expression);
+      evaluateOperators(expression);
     }
-  }
 
-  return expression;
-}
-
-function evaluateOrOperators(expression: string[]): string[] {
-  if (expression && expression.length > 1) {
-    let singleEvaluatedExpression;
-    const operatorIndex = expression.indexOf("OR");
-
-    if (expression.indexOf("OR") >= 0) {
-      const leftSideOperand = expression[operatorIndex - 1] === "TRUE";
-      const rightSideOperand = expression[operatorIndex + 1] === "TRUE";
+    if (orOperatorIndex >= 0) {
+      const leftSideOperand = expression[orOperatorIndex - 1] === "TRUE";
+      const rightSideOperand = expression[orOperatorIndex + 1] === "TRUE";
 
       singleEvaluatedExpression = leftSideOperand || rightSideOperand;
 
       expression.splice(
-        operatorIndex - 1,
+        orOperatorIndex - 1,
         3,
         singleEvaluatedExpression.toString().toUpperCase()
       );
 
-      evaluateOrOperators(expression);
+      evaluateOperators(expression);
     }
   }
 
@@ -116,11 +100,7 @@ export class BooleanCalculator {
     );
 
     if (isExpressionValid) {
-      evaluateNegationOperators(splitExpression);
-
-      evaluateAndOperators(splitExpression);
-
-      evaluateOrOperators(splitExpression);
+      evaluateOperators(splitExpression);
 
       return convertExpressionToBoolean(splitExpression);
     } else {

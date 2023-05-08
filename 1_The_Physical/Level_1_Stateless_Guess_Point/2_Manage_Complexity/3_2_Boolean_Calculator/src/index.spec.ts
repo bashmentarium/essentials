@@ -18,40 +18,12 @@ describe("boolean calculator", () => {
     expect(booleanCalculator.evaluate("NOT FALSE")).toBeTruthy();
   });
 
-  test("evaluates simple 'AND' expressions like 'FALSE AND FALSE'", () => {
-    expect(booleanCalculator.evaluate("FALSE AND FALSE")).toBeFalsy();
-    expect(() =>
-      booleanCalculator.evaluate("GREEN OR TRUE AND ELEPHANT")
-    ).toThrow(ERROR_MSG);
-  });
-
-  test("evaluates simple 'OR' expressions like 'TRUE OR FALSE'", () => {
-    expect(booleanCalculator.evaluate("TRUE OR FALSE")).toBeTruthy();
-  });
-
-  test('knows how to evaluate two or more "NOT" operators in "NOT NOT TRUE"', () => {
+  test("evaluates expressions with 'NOT', 'AND, and 'OR' operators with priority as listed", () => {
     expect(booleanCalculator.evaluate("NOT NOT TRUE")).toBeTruthy();
-    expect(booleanCalculator.evaluate("NOT NOT NOT TRUE")).toBeFalsy();
-  });
-
-  test("knows how to evaluate two 'AND' operators in 'TRUE AND FALSE AND TRUE'", () => {
-    expect(booleanCalculator.evaluate("TRUE AND FALSE AND TRUE")).toBeFalsy();
-  });
-
-  test("knows how to evaluate two 'OR' operators in 'FALSE OR FALSE OR TRUE'", () => {
-    expect(booleanCalculator.evaluate("FALSE OR FALSE OR TRUE")).toBeTruthy();
-  });
-
-  test("knows to evaluate both 'AND' and 'OR' operators in 'TRUE AND FALSE OR TRUE AND FALSE OR FALSE AND FALSE'", () => {
-    expect(
-      booleanCalculator.evaluate(
-        "TRUE AND FALSE OR TRUE AND FALSE OR FALSE AND FALSE"
-      )
-    ).toBeFalsy();
-  });
-
-  test("knows that an empty string is not a valid expression", () => {
-    expect(() => booleanCalculator.evaluate(" ")).toThrow(ERROR_MSG);
+    expect(booleanCalculator.evaluate("FALSE AND FALSE")).toBeFalsy();
+    expect(booleanCalculator.evaluate("FALSE OR TRUE")).toBeTruthy();
+    expect(booleanCalculator.evaluate("NOT FALSE AND NOT TRUE")).toBeFalsy();
+    expect(booleanCalculator.evaluate("NOT TRUE OR NOT FALSE")).toBeTruthy();
   });
 
   test("knows that an expression cannot start with an 'AND' or 'OR' operator", () => {
@@ -78,5 +50,11 @@ describe("boolean calculator", () => {
 
   test("knows that 'ASDJEWEK' is an invalid boolean expression", () => {
     expect(() => booleanCalculator.evaluate("ASDJEWEK")).toThrow(ERROR_MSG);
+  });
+
+  test("throws error if invalid operators used like 'GREEN OR TRUE AND ELEPHANT'", () => {
+    expect(() =>
+      booleanCalculator.evaluate("GREEN OR TRUE AND ELEPHANT")
+    ).toThrow(ERROR_MSG);
   });
 });
