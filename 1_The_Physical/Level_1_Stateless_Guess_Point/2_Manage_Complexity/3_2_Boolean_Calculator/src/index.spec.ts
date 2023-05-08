@@ -8,6 +8,16 @@ describe("boolean calculator", () => {
     booleanCalculator = new BooleanCalculator();
   });
 
+  test("evaluates an expression if it is a single 'TRUE' or 'FALSE' value", () => {
+    expect(booleanCalculator.evaluate("TRUE")).toBeTruthy();
+    expect(booleanCalculator.evaluate("FALSE")).toBeFalsy();
+  });
+
+  test("evaluates an expression if it is a single 'NOT TRUE' or 'NOT FALSE' value negation ", () => {
+    expect(booleanCalculator.evaluate("NOT TRUE")).toBeFalsy();
+    expect(booleanCalculator.evaluate("NOT FALSE")).toBeTruthy();
+  });
+
   test("evaluates expressions that contain only AND operator and valid boolean values", () => {
     expect(booleanCalculator.evaluate("FALSE AND FALSE")).toBeFalsy();
     expect(() =>
@@ -19,14 +29,8 @@ describe("boolean calculator", () => {
     expect(booleanCalculator.evaluate("TRUE OR FALSE")).toBeTruthy();
   });
 
-  test("evaluates an expression if it is a single 'TRUE' or 'FALSE' value", () => {
-    expect(booleanCalculator.evaluate("TRUE")).toBeTruthy();
-    expect(booleanCalculator.evaluate("FALSE")).toBeFalsy();
-  });
-
-  test("evaluates an expression if it is a single 'NOT TRUE' or 'NOT FALSE' value negation ", () => {
-    expect(booleanCalculator.evaluate("NOT TRUE")).toBeFalsy();
-    expect(booleanCalculator.evaluate("NOT FALSE")).toBeTruthy();
+  test("knows how to evaluate two 'AND' operators in 'TRUE AND FALSE AND TRUE'", () => {
+    expect(booleanCalculator.evaluate("TRUE AND FALSE AND TRUE")).toBeFalsy();
   });
 
   test("knows that an empty string is not a valid expression", () => {

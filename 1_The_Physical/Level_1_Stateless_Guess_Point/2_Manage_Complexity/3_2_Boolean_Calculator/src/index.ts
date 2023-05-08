@@ -1,6 +1,30 @@
 const validValues = ["TRUE", "FALSE", "NOT", "AND", "OR"];
 export const ERROR_MSG = "Invalid Boolean expression!";
 
+function evaluateAndOperator(expression: string[]) {
+  if (expression.length > 1) {
+    let singleEvaluatedExpression;
+    const operatorIndex = expression.indexOf("AND");
+
+    if (expression.indexOf("AND") >= 0) {
+      const leftSideOperand = expression[operatorIndex - 1] === "TRUE";
+      const rightSideOperand = expression[operatorIndex + 1] === "TRUE";
+
+      singleEvaluatedExpression = leftSideOperand && rightSideOperand;
+
+      expression.splice(
+        operatorIndex - 1,
+        3,
+        singleEvaluatedExpression.toString().toUpperCase()
+      );
+
+      evaluateAndOperator(expression);
+    }
+  }
+
+  return expression;
+}
+
 export class BooleanCalculator {
   public evaluate(text: string): boolean | string | void {
     if (text.trim() === "") throw new Error(ERROR_MSG);
@@ -45,14 +69,9 @@ export class BooleanCalculator {
       let leftSideOperand: boolean;
       let rightSideOperand: boolean;
 
-      // Find the 'AND' operator
-      operatorIndex = splitExpression.indexOf("AND");
-      if (operatorIndex >= 0) {
-        leftSideOperand = splitExpression[operatorIndex - 1] === "TRUE";
-        rightSideOperand = splitExpression[operatorIndex + 1] === "TRUE";
-        return leftSideOperand && rightSideOperand;
-      }
+      evaluateAndOperator(splitExpression);
 
+      // find OR operator
       operatorIndex = splitExpression.indexOf("OR");
       if (operatorIndex >= 0) {
         leftSideOperand = splitExpression[operatorIndex - 1] === "TRUE";
