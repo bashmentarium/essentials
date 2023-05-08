@@ -57,4 +57,10 @@ describe("boolean calculator", () => {
       booleanCalculator.evaluate("GREEN OR TRUE AND ELEPHANT")
     ).toThrow(ERROR_MSG);
   });
+
+  test("knows that 'NOT OR TRUE' is an invalid expression", () => {
+    expect(() => booleanCalculator.evaluate("NOT OR TRUE AND FALSE")).toThrow(
+      ERROR_MSG
+    );
+  });
 });

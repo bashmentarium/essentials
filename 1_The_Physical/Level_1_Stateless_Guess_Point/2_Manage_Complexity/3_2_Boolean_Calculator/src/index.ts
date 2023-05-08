@@ -9,6 +9,12 @@ function evaluateOperators(expression: string[]): string[] {
     let singleEvaluatedExpression;
 
     if (notOperatorIndex >= 0) {
+      if (
+        expression[notOperatorIndex + 1] !== "TRUE" &&
+        expression[notOperatorIndex + 1] !== "FALSE"
+      )
+        throw new Error("Invalid Boolean expression!");
+
       let operand = expression[notOperatorIndex + 1] === "TRUE";
 
       singleEvaluatedExpression = !operand;
