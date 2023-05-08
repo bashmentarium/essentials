@@ -26,6 +26,12 @@ describe("boolean calculator", () => {
     expect(booleanCalculator.evaluate("NOT TRUE OR NOT FALSE")).toBeTruthy();
   });
 
+  test("evaluates expressions with valid parentheses like '(TRUE OR TRUE OR TRUE) AND FALSE'", () => {
+    expect(
+      booleanCalculator.evaluate("(TRUE OR TRUE OR TRUE) AND FALSE")
+    ).toBeFalsy();
+  });
+
   test("knows that an expression cannot start with an 'AND' or 'OR' operator", () => {
     expect(() => booleanCalculator.evaluate("AND TRUE OR FALSE")).toThrow(
       ERROR_MSG

@@ -1,5 +1,11 @@
 export const ERROR_MSG = "Invalid Boolean expression!";
-const validValues = ["TRUE", "FALSE", "NOT", "AND", "OR"];
+const validValues = ["TRUE", "FALSE", "NOT", "AND", "OR", "(", ")"];
+
+const flattenExpression = (expression: string[]) => {
+  return expression
+    .flatMap((value) => value.split(/([()])/))
+    .filter((s) => s !== "");
+};
 
 function evaluateNotOperators(expression: string[]): void {
   let evaluatedExpression;
@@ -8,7 +14,14 @@ function evaluateNotOperators(expression: string[]): void {
   if (notOperatorIndex >= 0) {
     if (
       expression[notOperatorIndex + 1] !== "TRUE" &&
-      expression[notOperatorIndex + 1] !== "FALSE"
+      expression[notOperatorIndex + 1] !== "FALSE" &&
+      expression[notOperatorIndex + 1] !== "NOT" &&
+      expression[notOperatorIndex + 1] !== "NOT(" &&
+      expression[notOperatorIndex + 1] !== "(NOT" &&
+      expression[notOperatorIndex + 1] !== "(TRUE" &&
+      expression[notOperatorIndex + 1] !== "(FALSE" &&
+      expression[notOperatorIndex + 1] !== "TRUE)" &&
+      expression[notOperatorIndex + 1] !== "FALSE)"
     )
       throw new Error(ERROR_MSG);
 
@@ -51,7 +64,6 @@ function evaluateOrOperators(expression: string[]): void {
   const orOperatorIndex = expression.indexOf("OR");
 
   if (orOperatorIndex >= 0) {
-    console.log(expression);
     const leftSideOperand = expression[orOperatorIndex - 1] === "TRUE";
     const rightSideOperand = expression[orOperatorIndex + 1] === "TRUE";
 
@@ -66,6 +78,57 @@ function evaluateOrOperators(expression: string[]): void {
     evaluateOrOperators(expression);
   }
 }
+
+function checkParenthesesValidity(expression: string[]): boolean {
+  const stack: string[] = [];
+  for (const s of expression) {
+    if (s.startsWith("(")) {
+      stack.push(s);
+    } else if (s.endsWith(")")) {
+      if (!stack.length) {
+        return false;
+      }
+      stack.pop();
+    } else if (s.includes("(") || s.includes(")")) {
+      return false;
+    }
+  }
+
+  return !stack.length;
+}
+
+const recursivelyResolveParenthesys = (expression: string[]): string[] => {
+  let evaluatedParentheses = [""];
+  const openParenthesesIndex = expression.lastIndexOf("(");
+  if (openParenthesesIndex >= 0) {
+    const closeParenthesesIndex = expression.indexOf(")", openParenthesesIndex);
+
+    evaluatedParentheses = expression.slice(
+      openParenthesesIndex + 1,
+      closeParenthesesIndex
+    );
+
+    evaluateNotOperators(evaluatedParentheses);
+    evaluateAndOperators(evaluatedParentheses);
+    evaluateOrOperators(evaluatedParentheses);
+
+    expression.splice(
+      openParenthesesIndex,
+      closeParenthesesIndex - openParenthesesIndex + 1,
+      ...evaluatedParentheses
+    );
+
+    if (expression.indexOf("(") >= 0 && expression.indexOf(")") >= 0) {
+      recursivelyResolveParenthesys(evaluatedParentheses);
+    } else {
+      evaluateNotOperators(expression);
+      evaluateAndOperators(expression);
+      evaluateOrOperators(expression);
+    }
+  }
+
+  return expression;
+};
 
 function convertExpressionToBoolean(expression: string[]): boolean {
   return expression[0] === "TRUE";
@@ -88,7 +151,7 @@ export class BooleanCalculator {
       throw new Error(ERROR_MSG);
     }
 
-    const splitExpression = text.trim().split(" ");
+    let splitExpression = flattenExpression(text.trim().split(" "));
     const firstExpressionItem = splitExpression[0];
     const lastExpressionItem = splitExpression[splitExpression.length - 1];
 
@@ -111,11 +174,17 @@ export class BooleanCalculator {
     );
 
     if (isExpressionValid) {
+      if (checkParenthesesValidity(splitExpression)) {
+        splitExpression = recursivelyResolveParenthesys(splitExpression);
+      } else {
+        throw new Error(ERROR_MSG);
+      }
+
       evaluateNotOperators(splitExpression);
       evaluateAndOperators(splitExpression);
       evaluateOrOperators(splitExpression);
 
-      // Invalid expression that doesn't resolve to single value
+      // Invalid expression that doesn't resolve to a single boolean value
       if (splitExpression.length > 1) throw new Error(ERROR_MSG);
 
       return convertExpressionToBoolean(splitExpression);
