@@ -18,14 +18,14 @@ describe("boolean calculator", () => {
     expect(booleanCalculator.evaluate("NOT FALSE")).toBeTruthy();
   });
 
-  test("evaluates expressions that contain only AND operator and valid boolean values", () => {
+  test("evaluates simple 'AND' expressions like 'FALSE AND FALSE'", () => {
     expect(booleanCalculator.evaluate("FALSE AND FALSE")).toBeFalsy();
     expect(() =>
       booleanCalculator.evaluate("GREEN OR TRUE AND ELEPHANT")
     ).toThrow(ERROR_MSG);
   });
 
-  test("evaluates expressions that contain only OR operator and valid boolean values", () => {
+  test("evaluates simple 'OR' expressions like 'TRUE OR FALSE'", () => {
     expect(booleanCalculator.evaluate("TRUE OR FALSE")).toBeTruthy();
   });
 
