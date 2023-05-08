@@ -1,40 +1,40 @@
-export const WRONG_FORMAT_ERROR = 'Wrong format. Must be "XX:YY - XX:YY"';
+const minimum = 0;
+const maxHours = 24;
+const maxMinutes = 60;
 
-const hoursOrMinutesMinimum = 0;
-const hoursMaximum = 23;
-const minutesMaximum = 59;
+const leftSide = (text: string) => text.split(" - ")[0];
+const rightSide = (text: string) => text.split(" - ")[1];
+const hours = (text: string): number => Number(text.split(":")[0]);
+const minutes = (text: string): number => Number(text.split(":")[1]);
 
-function isBetween(num: string, min: number, max: number) {
-  const toNum = Number(num);
+export class MilitaryTimeValidator {
+  validate(text: string): boolean {
+    if (text === "") return false;
+    if (!text.includes(" - ")) return false;
+    if (!leftSide(text).includes(":")) return false;
+    if (!rightSide(text).includes(":")) return false;
+    if (hours(leftSide(text)) > hours(rightSide(text))) return false;
 
-  console.log({ num });
-  return toNum >= min && toNum <= max;
-}
+    if (
+      !(hours(leftSide(text)) < hours(rightSide(text))) &&
+      minutes(leftSide(text)) > minutes(rightSide(text))
+    )
+      return false;
 
-export class TimeValidator {
-  validateTime(time: string) {
-    if (!time.includes(" - ")) return WRONG_FORMAT_ERROR;
+    if (hours(leftSide(text)) > maxHours || hours(rightSide(text)) > maxHours)
+      return false;
 
-    const splitTime = time.split(" - ");
+    if (
+      minutes(leftSide(text)) > maxMinutes ||
+      minutes(rightSide(text)) > maxMinutes
+    )
+      return false;
 
-    const startTime = splitTime[0].split(":");
-    const endTime = splitTime[1].split(":");
+    if (hours(leftSide(text)) < minimum || hours(rightSide(text)) < minimum)
+      return false;
 
-    if (isBetween(startTime[0], hoursOrMinutesMinimum, hoursMaximum)) {
-      return WRONG_FORMAT_ERROR;
-    }
-
-    if (isBetween(startTime[1], hoursOrMinutesMinimum, minutesMaximum)) {
-      return WRONG_FORMAT_ERROR;
-    }
-
-    if (isBetween(endTime[0], hoursOrMinutesMinimum, hoursMaximum)) {
-      return WRONG_FORMAT_ERROR;
-    }
-
-    if (isBetween(endTime[1], hoursOrMinutesMinimum, minutesMaximum)) {
-      return WRONG_FORMAT_ERROR;
-    }
+    if (minutes(leftSide(text)) < minimum || minutes(rightSide(text)) < minimum)
+      return false;
 
     return true;
   }
