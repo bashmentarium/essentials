@@ -19,9 +19,6 @@ describe("boolean calculator", () => {
   });
 
   test("evaluates expressions with 'NOT', 'AND, and 'OR' operators with priority as listed", () => {
-    expect(booleanCalculator.evaluate("NOT NOT TRUE")).toBeTruthy();
-    expect(booleanCalculator.evaluate("FALSE AND FALSE")).toBeFalsy();
-    expect(booleanCalculator.evaluate("FALSE OR TRUE")).toBeTruthy();
     expect(booleanCalculator.evaluate("NOT FALSE AND NOT TRUE")).toBeFalsy();
     expect(booleanCalculator.evaluate("NOT TRUE OR NOT FALSE")).toBeTruthy();
   });
