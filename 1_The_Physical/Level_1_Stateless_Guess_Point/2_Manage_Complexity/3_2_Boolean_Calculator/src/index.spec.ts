@@ -63,4 +63,10 @@ describe("boolean calculator", () => {
       ERROR_MSG
     );
   });
+
+  test("knows that 'NOT FALSE FALSE' is an invalid expression", () => {
+    expect(() => booleanCalculator.evaluate("NOT FALSE FALSE")).toThrow(
+      ERROR_MSG
+    );
+  });
 });
