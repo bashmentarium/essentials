@@ -8,11 +8,15 @@ describe("boolean calculator", () => {
     booleanCalculator = new BooleanCalculator();
   });
 
-  test("evaluates expressions that contain only valid operators and boolean values", () => {
+  test("evaluates expressions that contain only AND operator and valid boolean values", () => {
     expect(booleanCalculator.evaluate("FALSE AND FALSE")).toBeFalsy();
     expect(() =>
       booleanCalculator.evaluate("GREEN OR TRUE AND ELEPHANT")
     ).toThrow(ERROR_MSG);
+  });
+
+  test("evaluates expressions that contain only OR operator and valid boolean values", () => {
+    expect(booleanCalculator.evaluate("TRUE OR FALSE")).toBeTruthy();
   });
 
   test("evaluates an expression if it is a single 'TRUE' or 'FALSE' value", () => {

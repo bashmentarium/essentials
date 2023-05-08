@@ -2,7 +2,7 @@ const validValues = ["TRUE", "FALSE", "NOT", "AND", "OR"];
 export const ERROR_MSG = "Invalid Boolean expression!";
 
 export class BooleanCalculator {
-  public evaluate(text: string): boolean | string {
+  public evaluate(text: string): boolean | string | void {
     if (text.trim() === "") throw new Error(ERROR_MSG);
     if (text === "TRUE") return true;
     if (text === "FALSE") return false;
@@ -41,14 +41,24 @@ export class BooleanCalculator {
     );
 
     if (isExpressionValid) {
-      // Find the 'AND' operator
-      const operatorIndex = splitExpression.indexOf("AND");
-      // Find left side
-      const leftSideOperand = splitExpression[operatorIndex - 1] === "TRUE";
-      // Find right side
-      const rightSideOperand = splitExpression[operatorIndex + 1] === "TRUE";
+      let operatorIndex: number;
+      let leftSideOperand: boolean;
+      let rightSideOperand: boolean;
 
-      return leftSideOperand && rightSideOperand;
+      // Find the 'AND' operator
+      operatorIndex = splitExpression.indexOf("AND");
+      if (operatorIndex >= 0) {
+        leftSideOperand = splitExpression[operatorIndex - 1] === "TRUE";
+        rightSideOperand = splitExpression[operatorIndex + 1] === "TRUE";
+        return leftSideOperand && rightSideOperand;
+      }
+
+      operatorIndex = splitExpression.indexOf("OR");
+      if (operatorIndex >= 0) {
+        leftSideOperand = splitExpression[operatorIndex - 1] === "TRUE";
+        rightSideOperand = splitExpression[operatorIndex + 1] === "TRUE";
+        return leftSideOperand || rightSideOperand;
+      }
     } else {
       throw new Error(ERROR_MSG);
     }

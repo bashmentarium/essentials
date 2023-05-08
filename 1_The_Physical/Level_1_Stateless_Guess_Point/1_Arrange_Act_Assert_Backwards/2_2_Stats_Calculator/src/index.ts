@@ -15,7 +15,7 @@ function sortArray(array: number[]) {
         isSwapped = true;
       }
     }
-    // IF no two elements were swapped
+    // If no two elements were swapped
     // by inner loop, then break
     if (!isSwapped) {
       break;
