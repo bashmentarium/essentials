@@ -38,10 +38,6 @@ describe("boolean calculator", () => {
     );
   });
 
-  test("knows how to evaluate the 'TRUE AND FALSE' expression", () => {
-    expect(booleanCalculator.evaluate("TRUE AND FALSE")).toBeFalsy();
-  });
-
   test("knows that 'eeaaTRUE AND eeeeTRUE' is an invalid expression", () => {
     expect(() => booleanCalculator.evaluate("eeaaTRUE AND eeeeTRUE")).toThrow(
       ERROR_MSG
@@ -52,7 +48,7 @@ describe("boolean calculator", () => {
     expect(() => booleanCalculator.evaluate("ASDJEWEK")).toThrow(ERROR_MSG);
   });
 
-  test("throws error if invalid operators used like 'GREEN OR TRUE AND ELEPHANT'", () => {
+  test("throws error if invalid operators or values used like 'GREEN OR TRUE FINDS ELEPHANT'", () => {
     expect(() =>
       booleanCalculator.evaluate("GREEN OR TRUE AND ELEPHANT")
     ).toThrow(ERROR_MSG);

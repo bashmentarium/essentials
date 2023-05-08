@@ -115,6 +115,7 @@ export class BooleanCalculator {
       evaluateAndOperators(splitExpression);
       evaluateOrOperators(splitExpression);
 
+      // Invalid expression that doesn't resolve to single value
       if (splitExpression.length > 1) throw new Error(ERROR_MSG);
 
       return convertExpressionToBoolean(splitExpression);
