@@ -1,8 +1,30 @@
 export const ERROR_MSG = "Invalid Boolean expression!";
 const validValues = ["TRUE", "FALSE", "NOT", "AND", "OR"];
 
+function evaluateNegationOperators(expression: string[]): string[] {
+  if (expression && expression.length > 1) {
+    let singleEvaluatedExpression;
+    const operatorIndex = expression.lastIndexOf("NOT");
+
+    if (expression.lastIndexOf("NOT") >= 0) {
+      let operand = expression[operatorIndex + 1] === "TRUE";
+
+      singleEvaluatedExpression = !operand;
+
+      expression.splice(
+        operatorIndex,
+        2,
+        singleEvaluatedExpression.toString().toUpperCase()
+      );
+
+      evaluateNegationOperators(expression);
+    }
+  }
+
+  return expression;
+}
+
 function evaluateAndOperators(expression: string[]): string[] {
-  console.log("AND", { expression });
   if (expression && expression.length > 1) {
     let singleEvaluatedExpression;
     const operatorIndex = expression.indexOf("AND");
@@ -27,7 +49,6 @@ function evaluateAndOperators(expression: string[]): string[] {
 }
 
 function evaluateOrOperators(expression: string[]): string[] {
-  console.log("OR", { expression });
   if (expression && expression.length > 1) {
     let singleEvaluatedExpression;
     const operatorIndex = expression.indexOf("OR");
@@ -95,6 +116,8 @@ export class BooleanCalculator {
     );
 
     if (isExpressionValid) {
+      evaluateNegationOperators(splitExpression);
+
       evaluateAndOperators(splitExpression);
 
       evaluateOrOperators(splitExpression);

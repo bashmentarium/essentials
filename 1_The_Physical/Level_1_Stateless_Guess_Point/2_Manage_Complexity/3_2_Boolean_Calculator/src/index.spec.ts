@@ -29,6 +29,11 @@ describe("boolean calculator", () => {
     expect(booleanCalculator.evaluate("TRUE OR FALSE")).toBeTruthy();
   });
 
+  test('knows how to evaluate two or more "NOT" operators in "NOT NOT TRUE"', () => {
+    expect(booleanCalculator.evaluate("NOT NOT TRUE")).toBeTruthy();
+    expect(booleanCalculator.evaluate("NOT NOT NOT TRUE")).toBeFalsy();
+  });
+
   test("knows how to evaluate two 'AND' operators in 'TRUE AND FALSE AND TRUE'", () => {
     expect(booleanCalculator.evaluate("TRUE AND FALSE AND TRUE")).toBeFalsy();
   });
