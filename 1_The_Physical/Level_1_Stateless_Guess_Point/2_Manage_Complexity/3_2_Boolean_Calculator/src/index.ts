@@ -2,6 +2,7 @@ export const ERROR_MSG = "Invalid Boolean expression!";
 const validValues = ["TRUE", "FALSE", "NOT", "AND", "OR"];
 
 function evaluateAndOperators(expression: string[]): string[] {
+  console.log("AND", { expression });
   if (expression && expression.length > 1) {
     let singleEvaluatedExpression;
     const operatorIndex = expression.indexOf("AND");
@@ -26,6 +27,7 @@ function evaluateAndOperators(expression: string[]): string[] {
 }
 
 function evaluateOrOperators(expression: string[]): string[] {
+  console.log("OR", { expression });
   if (expression && expression.length > 1) {
     let singleEvaluatedExpression;
     const operatorIndex = expression.indexOf("OR");
