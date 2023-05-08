@@ -151,9 +151,9 @@ export class BooleanCalculator {
       throw new Error(ERROR_MSG);
     }
 
-    let splitExpression = flattenExpression(text.trim().split(" "));
-    const firstExpressionItem = splitExpression[0];
-    const lastExpressionItem = splitExpression[splitExpression.length - 1];
+    let expression = flattenExpression(text.trim().split(" "));
+    const firstExpressionItem = expression[0];
+    const lastExpressionItem = expression[expression.length - 1];
 
     if (firstExpressionItem === "AND" || firstExpressionItem === "OR") {
       throw new Error(ERROR_MSG);
@@ -167,27 +167,27 @@ export class BooleanCalculator {
       throw new Error(ERROR_MSG);
     }
 
-    const isExpressionValid: boolean = splitExpression.every(
+    const isExpressionValid: boolean = expression.every(
       (expression: string) => {
         return validValues.indexOf(expression) >= 0;
       }
     );
 
     if (isExpressionValid) {
-      if (checkParenthesesValidity(splitExpression)) {
-        splitExpression = recursivelyResolveParenthesys(splitExpression);
+      if (checkParenthesesValidity(expression)) {
+        expression = recursivelyResolveParenthesys(expression);
       } else {
         throw new Error(ERROR_MSG);
       }
 
-      evaluateNotOperators(splitExpression);
-      evaluateAndOperators(splitExpression);
-      evaluateOrOperators(splitExpression);
+      evaluateNotOperators(expression);
+      evaluateAndOperators(expression);
+      evaluateOrOperators(expression);
 
       // Invalid expression that doesn't resolve to a single boolean value
-      if (splitExpression.length > 1) throw new Error(ERROR_MSG);
+      if (expression.length > 1) throw new Error(ERROR_MSG);
 
-      return convertExpressionToBoolean(splitExpression);
+      return convertExpressionToBoolean(expression);
     } else {
       throw new Error(ERROR_MSG);
     }
