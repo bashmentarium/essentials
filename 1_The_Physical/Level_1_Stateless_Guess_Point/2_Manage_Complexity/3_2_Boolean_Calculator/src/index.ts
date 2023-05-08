@@ -4,7 +4,7 @@ const validValues = ["TRUE", "FALSE", "NOT", "AND", "OR", "(", ")"];
 const flattenExpression = (expression: string[]) => {
   return expression
     .flatMap((value) => value.split(/([()])/))
-    .filter((s) => s !== "");
+    .filter((character) => character !== "");
 };
 
 function evaluateNotOperators(expression: string[]): void {

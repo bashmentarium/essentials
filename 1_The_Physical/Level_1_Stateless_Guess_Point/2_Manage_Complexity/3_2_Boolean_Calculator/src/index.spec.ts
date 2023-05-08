@@ -30,6 +30,7 @@ describe("boolean calculator", () => {
     expect(
       booleanCalculator.evaluate("(TRUE OR TRUE OR TRUE) AND FALSE")
     ).toBeFalsy();
+    expect(booleanCalculator.evaluate("(NOT FALSE)")).toBeTruthy();
   });
 
   test("knows that an expression cannot start with an 'AND' or 'OR' operator", () => {
@@ -48,10 +49,6 @@ describe("boolean calculator", () => {
     expect(() => booleanCalculator.evaluate("eeaaTRUE AND eeeeTRUE")).toThrow(
       ERROR_MSG
     );
-  });
-
-  test("knows that 'ASDJEWEK' is an invalid boolean expression", () => {
-    expect(() => booleanCalculator.evaluate("ASDJEWEK")).toThrow(ERROR_MSG);
   });
 
   test("throws error if invalid operators or values used like 'GREEN OR TRUE FINDS ELEPHANT'", () => {

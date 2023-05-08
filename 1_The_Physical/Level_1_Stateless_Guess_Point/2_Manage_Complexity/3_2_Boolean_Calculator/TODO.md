@@ -15,8 +15,8 @@
 // To compute a boolean expression
 
 Make validation on the creating pairs step:
-AND, OR, can have only TRUE OR FALSE
-NOT cannot be last and can have only a TRU OR FALSE in front of it
+AND, OR, can have only TRUE OR FALSE as operands
+NOT cannot be last and can have only a TRUE OR FALSE in front of it
 
 1. Find index of logical operator with the highest priority
 2. Compute it alongside the next value
@@ -26,3 +26,4 @@ NOT cannot be last and can have only a TRU OR FALSE in front of it
 6. If anything different from this algorithm - throw Error.
 
 // Adapt for parenthesis
+Find deepest parenthesys till no parentheses left.
