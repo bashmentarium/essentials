@@ -33,6 +33,10 @@ describe("boolean calculator", () => {
     expect(booleanCalculator.evaluate("TRUE AND FALSE AND TRUE")).toBeFalsy();
   });
 
+  test("knows how to evaluate two 'OR' operators in 'FALSE OR FALSE OR TRUE'", () => {
+    expect(booleanCalculator.evaluate("FALSE OR FALSE OR TRUE")).toBeTruthy();
+  });
+
   test("knows that an empty string is not a valid expression", () => {
     expect(() => booleanCalculator.evaluate(" ")).toThrow(ERROR_MSG);
   });

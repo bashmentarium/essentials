@@ -1,8 +1,8 @@
-const validValues = ["TRUE", "FALSE", "NOT", "AND", "OR"];
 export const ERROR_MSG = "Invalid Boolean expression!";
+const validValues = ["TRUE", "FALSE", "NOT", "AND", "OR"];
 
-function evaluateAndOperator(expression: string[]) {
-  if (expression.length > 1) {
+function evaluateAndOperators(expression: string[]): string[] {
+  if (expression && expression.length > 1) {
     let singleEvaluatedExpression;
     const operatorIndex = expression.indexOf("AND");
 
@@ -18,11 +18,39 @@ function evaluateAndOperator(expression: string[]) {
         singleEvaluatedExpression.toString().toUpperCase()
       );
 
-      evaluateAndOperator(expression);
+      evaluateAndOperators(expression);
     }
   }
 
   return expression;
+}
+
+function evaluateOrOperators(expression: string[]): string[] {
+  if (expression && expression.length > 1) {
+    let singleEvaluatedExpression;
+    const operatorIndex = expression.indexOf("OR");
+
+    if (expression.indexOf("OR") >= 0) {
+      const leftSideOperand = expression[operatorIndex - 1] === "TRUE";
+      const rightSideOperand = expression[operatorIndex + 1] === "TRUE";
+
+      singleEvaluatedExpression = leftSideOperand || rightSideOperand;
+
+      expression.splice(
+        operatorIndex - 1,
+        3,
+        singleEvaluatedExpression.toString().toUpperCase()
+      );
+
+      evaluateOrOperators(expression);
+    }
+  }
+
+  return expression;
+}
+
+function convertExpressionToBoolean(expression: string[]): boolean {
+  return expression[0] === "TRUE";
 }
 
 export class BooleanCalculator {
@@ -65,19 +93,11 @@ export class BooleanCalculator {
     );
 
     if (isExpressionValid) {
-      let operatorIndex: number;
-      let leftSideOperand: boolean;
-      let rightSideOperand: boolean;
+      evaluateAndOperators(splitExpression);
 
-      evaluateAndOperator(splitExpression);
+      evaluateOrOperators(splitExpression);
 
-      // find OR operator
-      operatorIndex = splitExpression.indexOf("OR");
-      if (operatorIndex >= 0) {
-        leftSideOperand = splitExpression[operatorIndex - 1] === "TRUE";
-        rightSideOperand = splitExpression[operatorIndex + 1] === "TRUE";
-        return leftSideOperand || rightSideOperand;
-      }
+      return convertExpressionToBoolean(splitExpression);
     } else {
       throw new Error(ERROR_MSG);
     }
