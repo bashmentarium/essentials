@@ -1,4 +1,4 @@
-import { Student } from "./index";
+import { Student, ERROR_MSG } from "./index";
 
 describe("Student State Machine", () => {
   it("accepts 'firstName' and 'lastName' as arguments", () => {
@@ -19,5 +19,15 @@ describe("Student State Machine", () => {
 
     expect(studentStateMachine.firstName).toEqual(firstName);
     expect(studentStateMachine.lastName).toEqual(lastName);
+  });
+
+  it("throws error when no 'firstName' or 'lastName' provided", () => {
+    const firstName = "John";
+    const lastName = "Doe";
+    const invalidFirstName = "";
+    const invalidLastName = "";
+
+    expect(() => new Student(invalidFirstName, lastName)).toThrow(ERROR_MSG);
+    expect(() => new Student(firstName, invalidLastName)).toThrow(ERROR_MSG);
   });
 });
