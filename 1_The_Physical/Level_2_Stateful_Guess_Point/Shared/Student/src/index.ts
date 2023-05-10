@@ -16,6 +16,10 @@ export class Student {
       throw new Error(ERROR_MSG);
     }
 
+    if (props.firstName.length > 10) {
+      throw new Error(ERROR_MSG);
+    }
+
     this.firstName = firstName;
     this.lastName = lastName;
   }

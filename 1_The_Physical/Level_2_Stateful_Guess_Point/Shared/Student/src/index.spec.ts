@@ -11,21 +11,26 @@ describe("Student State Machine", () => {
     studentStateMachine = new Student(firstName, lastName);
   });
 
-  it("accepts 'firstName' and 'lastName' as arguments", () => {
+  test("accepts 'firstName' and 'lastName' as arguments", () => {
     expect(studentStateMachine.firstName).toBeDefined();
     expect(studentStateMachine.lastName).toBeDefined();
   });
 
-  it("assigns 'firstName' and 'lastName' arguments as instance properties", () => {
+  test("assigns 'firstName' and 'lastName' arguments as instance properties", () => {
     expect(studentStateMachine.firstName).toEqual(firstName);
     expect(studentStateMachine.lastName).toEqual(lastName);
   });
 
-  it("throws error when no 'firstName' or 'lastName' provided", () => {
+  test("throws error when no 'firstName' or 'lastName' provided", () => {
     expect(() => new Student(invalidFirstName, lastName)).toThrow(ERROR_MSG);
     expect(() => new Student(firstName, invalidLastName)).toThrow(ERROR_MSG);
     expect(() => new Student(invalidFirstName, invalidLastName)).toThrow(
       ERROR_MSG
     );
+  });
+
+  test("throws error when 'firstName' is longer than 10 characters", () => {
+    const invalidFirstName = "JohnJohnJohn";
+    expect(() => new Student(invalidFirstName, lastName)).toThrow(ERROR_MSG);
   });
 });
