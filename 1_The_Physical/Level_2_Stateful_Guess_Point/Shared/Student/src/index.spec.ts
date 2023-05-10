@@ -45,4 +45,18 @@ describe("Student State Machine", () => {
 
     expect(() => new Student(invalidFirstName, lastName)).toThrow(ERROR_MSG);
   });
+
+  test("throws error when 'lastName' is shorter than 2 characters", () => {
+    const firstName = "John";
+    const invalidLastName = "A";
+
+    expect(() => new Student(firstName, invalidLastName)).toThrow(ERROR_MSG);
+  });
+
+  test("throws error when 'lastName' is longer than 15 characters", () => {
+    const firstName = "John";
+    const invalidLastName = "DoeDoeDoeDoeDoeDoe";
+
+    expect(() => new Student(firstName, invalidLastName)).toThrow(ERROR_MSG);
+  });
 });
