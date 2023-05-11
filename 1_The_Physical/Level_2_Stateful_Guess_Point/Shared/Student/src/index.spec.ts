@@ -7,7 +7,7 @@ import {
 } from "./index";
 
 describe("Student State Machine", () => {
-  describe("returns a Student object that", () => {
+  describe("creates a Student object that", () => {
     const firstName = "John";
     const lastName = "Doe";
     let studentStateMachine: Student;
@@ -16,7 +16,7 @@ describe("Student State Machine", () => {
       studentStateMachine = Student.create(firstName, lastName) as Student;
     });
 
-    test("accepts 'firstName' and 'lastName' as arguments", () => {
+    test("accepts 'firstName' and 'lastName' as arguments and assigns as properties", () => {
       expect(studentStateMachine.firstName).toBeDefined();
       expect(studentStateMachine.lastName).toBeDefined();
     });
@@ -45,7 +45,7 @@ describe("Student State Machine", () => {
     });
   });
 
-  describe("returns an error object", () => {
+  describe("returns an Error object", () => {
     const firstName = "John";
     const lastName = "Doe";
     let invalidFirstName = "";

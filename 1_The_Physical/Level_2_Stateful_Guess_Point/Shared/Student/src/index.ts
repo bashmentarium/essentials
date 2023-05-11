@@ -1,22 +1,15 @@
+type StudentOrError = Student | StudentError;
+
+interface StudentProps {
+  firstName: string;
+  lastName: string;
+}
+
 export const INCOMPLETE_ERROR = "Student must have a first and last name";
 export const FIRST_NAME_LENGTH_ERROR =
   "Students first name must be at least 2 characters short and 10 characters long";
 export const LAST_NAME_LENGTH_ERROR =
   "Students last name must be at least 2 characters short and 15 characters long";
-
-const validateProps = (props: StudentProps) => {
-  if (!props.firstName || !props.lastName) {
-    throw new Error(INCOMPLETE_ERROR);
-  }
-
-  if (props.firstName.length < 2 || props.firstName.length > 10) {
-    throw new Error(FIRST_NAME_LENGTH_ERROR);
-  }
-
-  if (props.lastName.length < 2 || props.lastName.length > 15) {
-    throw new Error(LAST_NAME_LENGTH_ERROR);
-  }
-};
 
 const validateFirstName = (firstName: string) => {
   if (firstName.length < 2 || firstName.length > 10) {
@@ -28,6 +21,15 @@ const validateLastName = (lastName: string) => {
   if (lastName.length < 2 || lastName.length > 15) {
     throw new Error(LAST_NAME_LENGTH_ERROR);
   }
+};
+
+const validateProps = (props: StudentProps) => {
+  if (!props.firstName || !props.lastName) {
+    throw new Error(INCOMPLETE_ERROR);
+  }
+
+  validateFirstName(props.firstName);
+  validateLastName(props.lastName);
 };
 
 const formatProps = ({ firstName, lastName }: StudentProps) => {
@@ -48,14 +50,7 @@ export const errorObj = (message: string): StudentError => ({
   message,
 });
 
-export type StudentError = { error: true; message: string };
-
-type StudentOrError = Student | StudentError;
-
-interface StudentProps {
-  firstName: string;
-  lastName: string;
-}
+export type StudentError = { error: boolean; message: string };
 
 export class Student {
   private _firstName: string;
