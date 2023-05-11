@@ -4,6 +4,8 @@ import {
   INCOMPLETE_ERROR,
   FIRST_NAME_LENGTH_ERROR,
   LAST_NAME_LENGTH_ERROR,
+  UPDATE_FIRST_NAME,
+  UPDATE_LAST_NAME,
 } from "./index";
 
 describe("Student State Machine", () => {
@@ -42,6 +44,16 @@ describe("Student State Machine", () => {
       studentStateMachine.updateLastName("Bash");
 
       expect(studentStateMachine.lastName.value).toEqual("Bash");
+    });
+
+    test("registers updating events in a 'events' property", () => {
+      studentStateMachine.updateLastName("Enrgy");
+      studentStateMachine.updateFirstName("Henry");
+
+      expect(studentStateMachine.events).toEqual([
+        { type: UPDATE_LAST_NAME, payload: "Enrgy" },
+        { type: UPDATE_FIRST_NAME, payload: "Henry" },
+      ]);
     });
   });
 

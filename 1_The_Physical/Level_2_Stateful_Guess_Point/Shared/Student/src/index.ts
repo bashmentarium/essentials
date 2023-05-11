@@ -1,12 +1,5 @@
-type StudentOrError = Student | StudentError;
-
 interface StudentName {
   value: string;
-}
-
-interface StudentFullName {
-  firstName: StudentName;
-  lastName: StudentName;
 }
 
 interface StudentEmail {
@@ -18,6 +11,17 @@ interface StudentProps {
   lastName: string;
 }
 
+interface StudentEvent {
+  type: string;
+  payload: string;
+}
+
+type StudentEvents = StudentEvent[];
+
+type StudentOrError = Student | StudentError;
+
+export const UPDATE_FIRST_NAME = "UPDATE_FIRST_NAME";
+export const UPDATE_LAST_NAME = "UPDATE_LAST_NAME";
 export const INCOMPLETE_ERROR = "Student must have a first and last name";
 export const FIRST_NAME_LENGTH_ERROR =
   "Students first name must be at least 2 characters short and 10 characters long";
@@ -69,6 +73,7 @@ export class Student {
   private _firstName: StudentName;
   private _lastName: StudentName;
   private _studentEmail: StudentEmail;
+  private _events: StudentEvents = [];
 
   private constructor(firstName: string, lastName: string) {
     const props: StudentProps = { firstName, lastName };
@@ -104,9 +109,22 @@ export class Student {
     return this._studentEmail;
   }
 
+  get events(): StudentEvents {
+    return this._events;
+  }
+
+  set event(event: StudentEvent) {
+    this._events = [...this._events, event];
+  }
+
   updateFirstName(firstName: string): void | StudentError {
     try {
       validateFirstName(firstName);
+
+      this._events = [
+        ...this._events,
+        { type: UPDATE_FIRST_NAME, payload: firstName },
+      ];
 
       this._firstName = { value: firstName };
     } catch (e: any) {
@@ -117,6 +135,11 @@ export class Student {
   updateLastName(lastName: string): void | StudentError {
     try {
       validateLastName(lastName);
+
+      this._events = [
+        ...this._events,
+        { type: UPDATE_LAST_NAME, payload: lastName },
+      ];
 
       this._lastName = { value: lastName };
     } catch (e: any) {
