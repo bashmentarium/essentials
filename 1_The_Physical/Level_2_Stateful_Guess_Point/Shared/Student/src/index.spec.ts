@@ -19,6 +19,14 @@ describe("Student State Machine", () => {
       expect(studentStateMachine.firstName).toEqual(firstName);
       expect(studentStateMachine.lastName).toEqual(lastName);
     });
+
+    test("creates the 'studentEmail' property", () => {
+      const firstName = "John";
+      const lastName = "Doe";
+      const studentStateMachine = new Student(firstName, lastName);
+
+      expect(studentStateMachine.studentEmail).toBeDefined();
+    });
   });
 
   describe("throws an error", () => {

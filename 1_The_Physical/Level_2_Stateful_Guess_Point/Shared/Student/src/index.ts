@@ -8,6 +8,7 @@ export const ERROR_MSG = "Student must have a first and last name";
 export class Student {
   firstName: string;
   lastName: string;
+  studentEmail: string;
 
   constructor(firstName: string, lastName: string) {
     const props: StudentProps = { firstName, lastName };
@@ -26,5 +27,6 @@ export class Student {
 
     this.firstName = firstName;
     this.lastName = lastName;
+    this.studentEmail = "";
   }
 }
