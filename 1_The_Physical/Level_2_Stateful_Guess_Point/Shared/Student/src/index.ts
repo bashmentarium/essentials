@@ -31,6 +31,8 @@ export class Student {
 
     this.firstName = firstName;
     this.lastName = lastName;
-    this.studentEmail = "";
+    this.studentEmail = `${firstName
+      .slice(0, 3)
+      .toLowerCase()}@essentialist.dev`;
   }
 }

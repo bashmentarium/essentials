@@ -20,8 +20,8 @@ describe("Student State Machine", () => {
       expect(studentStateMachine.lastName).toEqual(lastName);
     });
 
-    test("creates the 'studentEmail' property", () => {
-      expect(studentStateMachine.studentEmail).toBeDefined();
+    test("creates the 'studentEmail' property from 'firstName'", () => {
+      expect(studentStateMachine.studentEmail).toEqual("joh@essentialist.dev");
     });
   });
 
