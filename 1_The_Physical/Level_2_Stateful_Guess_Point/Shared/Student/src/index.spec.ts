@@ -1,4 +1,10 @@
-import { Student, ERROR_MSG } from "./index";
+import {
+  Student,
+  errorObj,
+  INCOMPLETE_ERROR,
+  FIRST_NAME_LENGTH_ERROR,
+  LAST_NAME_LENGTH_ERROR,
+} from "./index";
 
 describe("Student State Machine", () => {
   describe("functionality", () => {
@@ -7,7 +13,7 @@ describe("Student State Machine", () => {
     let studentStateMachine: Student;
 
     beforeEach(() => {
-      studentStateMachine = new Student(firstName, lastName);
+      studentStateMachine = Student.create(firstName, lastName) as Student;
     });
 
     test("accepts 'firstName' and 'lastName' as arguments", () => {
@@ -34,34 +40,46 @@ describe("Student State Machine", () => {
     let invalidLastName = "";
 
     test("when no 'firstName' or 'lastName' provided", () => {
-      expect(() => new Student(invalidFirstName, lastName)).toThrow(ERROR_MSG);
-      expect(() => new Student(firstName, invalidLastName)).toThrow(ERROR_MSG);
-      expect(() => new Student(invalidFirstName, invalidLastName)).toThrow(
-        ERROR_MSG
+      expect(Student.create(invalidFirstName, lastName)).toEqual(
+        errorObj(INCOMPLETE_ERROR)
+      );
+      expect(Student.create(firstName, invalidLastName)).toEqual(
+        errorObj(INCOMPLETE_ERROR)
+      );
+      expect(Student.create(invalidFirstName, invalidLastName)).toEqual(
+        errorObj(INCOMPLETE_ERROR)
       );
     });
 
     test("when 'firstName' is shorter than 2 characters", () => {
       invalidFirstName = "J";
-      expect(() => new Student(invalidFirstName, lastName)).toThrow(ERROR_MSG);
+      expect(Student.create(invalidFirstName, lastName)).toEqual(
+        errorObj(FIRST_NAME_LENGTH_ERROR)
+      );
     });
 
     test("when 'firstName' is longer than 10 characters", () => {
       invalidFirstName = "JohnJohnJohn";
 
-      expect(() => new Student(invalidFirstName, lastName)).toThrow(ERROR_MSG);
+      expect(Student.create(invalidFirstName, lastName)).toEqual(
+        errorObj(FIRST_NAME_LENGTH_ERROR)
+      );
     });
 
     test("when 'lastName' is shorter than 2 characters", () => {
       invalidLastName = "A";
 
-      expect(() => new Student(firstName, invalidLastName)).toThrow(ERROR_MSG);
+      expect(Student.create(firstName, invalidLastName)).toEqual(
+        errorObj(LAST_NAME_LENGTH_ERROR)
+      );
     });
 
     test("when 'lastName' is longer than 15 characters", () => {
       invalidLastName = "DoeDoeDoeDoeDoeDoe";
 
-      expect(() => new Student(firstName, invalidLastName)).toThrow(ERROR_MSG);
+      expect(Student.create(firstName, invalidLastName)).toEqual(
+        errorObj(LAST_NAME_LENGTH_ERROR)
+      );
     });
   });
 });
