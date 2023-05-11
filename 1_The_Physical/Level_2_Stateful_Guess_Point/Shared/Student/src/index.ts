@@ -18,6 +18,31 @@ const validateProps = (props: StudentProps) => {
   }
 };
 
+const validateFirstName = (firstName: string) => {
+  if (firstName.length < 2 || firstName.length > 10) {
+    throw new Error(FIRST_NAME_LENGTH_ERROR);
+  }
+};
+
+const validateLastName = (lastName: string) => {
+  if (lastName.length < 2 || lastName.length > 15) {
+    throw new Error(LAST_NAME_LENGTH_ERROR);
+  }
+};
+
+const formatProps = ({ firstName, lastName }: StudentProps) => {
+  const formattedFirstName = firstName.slice(0, 2).toLowerCase();
+  const formattedLastName =
+    lastName.length >= 5
+      ? lastName.slice(0, 5).toLowerCase()
+      : lastName.slice(0, lastName.length).toLowerCase();
+
+  return {
+    formattedFirstName,
+    formattedLastName,
+  };
+};
+
 export const errorObj = (message: string): StudentError => ({
   error: true,
   message,
@@ -33,24 +58,20 @@ interface StudentProps {
 }
 
 export class Student {
-  firstName: string;
-  lastName: string;
-  studentEmail: string;
+  private _firstName: string;
+  private _lastName: string;
+  private _studentEmail: string;
 
   private constructor(firstName: string, lastName: string) {
     const props: StudentProps = { firstName, lastName };
 
     validateProps(props);
 
-    const formattedFirstName = firstName.slice(0, 2).toLowerCase();
-    const formattedLastName =
-      lastName.length >= 5
-        ? lastName.slice(0, 5).toLowerCase()
-        : lastName.slice(0, lastName.length).toLowerCase();
+    const { formattedFirstName, formattedLastName } = formatProps(props);
 
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.studentEmail = `${formattedFirstName}${formattedLastName}@essentialist.dev`;
+    this._firstName = firstName;
+    this._lastName = lastName;
+    this._studentEmail = `${formattedFirstName}${formattedLastName}@essentialist.dev`;
   }
 
   static create(firstName: string, lastName: string): StudentOrError {
@@ -59,5 +80,29 @@ export class Student {
     } catch (e: any) {
       return errorObj(e.message);
     }
+  }
+
+  get firstName(): string {
+    return this._firstName;
+  }
+
+  get lastName(): string {
+    return this._lastName;
+  }
+
+  get emailAddress(): string {
+    return this._studentEmail;
+  }
+
+  updateFirstName(firstName: string): void {
+    validateFirstName(firstName);
+
+    this._firstName = firstName;
+  }
+
+  updateLastName(lastName: string): void {
+    validateLastName(lastName);
+
+    this._lastName = lastName;
   }
 }

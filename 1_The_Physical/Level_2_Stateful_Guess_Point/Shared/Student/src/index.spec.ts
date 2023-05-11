@@ -7,7 +7,7 @@ import {
 } from "./index";
 
 describe("Student State Machine", () => {
-  describe("functionality", () => {
+  describe("returns a Student object that", () => {
     const firstName = "John";
     const lastName = "Doe";
     let studentStateMachine: Student;
@@ -27,13 +27,19 @@ describe("Student State Machine", () => {
     });
 
     test("creates the 'studentEmail' property from 'firstName' and 'lastName'", () => {
-      expect(studentStateMachine.studentEmail).toEqual(
+      expect(studentStateMachine.emailAddress).toEqual(
         "jodoe@essentialist.dev"
       );
     });
+
+    test("updates the first name via 'updateFirstName' method", () => {
+      studentStateMachine.updateFirstName("Michael");
+
+      expect(studentStateMachine.firstName).toEqual("Michael");
+    });
   });
 
-  describe("throws an error", () => {
+  describe("returns an error object", () => {
     const firstName = "John";
     const lastName = "Doe";
     let invalidFirstName = "";
@@ -79,6 +85,26 @@ describe("Student State Machine", () => {
 
       expect(Student.create(firstName, invalidLastName)).toEqual(
         errorObj(LAST_NAME_LENGTH_ERROR)
+      );
+    });
+
+    test("when updating 'firstName' with invalid value", () => {
+      const student = Student.create(firstName, lastName) as Student;
+
+      invalidFirstName = "FirstNameLongerThan10Characters";
+
+      expect(() => student.updateFirstName(invalidFirstName)).toThrowError(
+        FIRST_NAME_LENGTH_ERROR
+      );
+    });
+
+    test("when updating 'lastName' with invalid value", () => {
+      const student = Student.create(firstName, lastName) as Student;
+
+      invalidLastName = "LastNameLongerThan15Characters";
+
+      expect(() => student.updateLastName(invalidLastName)).toThrowError(
+        LAST_NAME_LENGTH_ERROR
       );
     });
   });
