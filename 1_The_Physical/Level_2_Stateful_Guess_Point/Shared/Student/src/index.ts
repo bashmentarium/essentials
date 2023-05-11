@@ -29,10 +29,11 @@ export class Student {
 
     validateProps(props);
 
+    const formattedFirstName = firstName.slice(0, 2).toLowerCase();
+    const formattedLastName = lastName.slice(0, 3).toLowerCase();
+
     this.firstName = firstName;
     this.lastName = lastName;
-    this.studentEmail = `${firstName
-      .slice(0, 3)
-      .toLowerCase()}@essentialist.dev`;
+    this.studentEmail = `${formattedFirstName}${formattedLastName}@essentialist.dev`;
   }
 }
