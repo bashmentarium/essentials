@@ -16,18 +16,18 @@ describe("Student State Machine", () => {
       studentStateMachine = Student.create(firstName, lastName) as Student;
     });
 
-    test("accepts 'firstName' and 'lastName' as arguments and assigns as properties", () => {
+    test("accepts 'firstName' and 'lastName' as arguments and assigns them as properties", () => {
       expect(studentStateMachine.firstName).toBeDefined();
       expect(studentStateMachine.lastName).toBeDefined();
     });
 
     test("assigns 'firstName' and 'lastName' arguments as instance properties", () => {
-      expect(studentStateMachine.firstName).toEqual(firstName);
-      expect(studentStateMachine.lastName).toEqual(lastName);
+      expect(studentStateMachine.firstName.value).toEqual(firstName);
+      expect(studentStateMachine.lastName.value).toEqual(lastName);
     });
 
     test("creates the 'studentEmail' property from 'firstName' and 'lastName'", () => {
-      expect(studentStateMachine.emailAddress).toEqual(
+      expect(studentStateMachine.emailAddress.value).toEqual(
         "jodoe@essentialist.dev"
       );
     });
@@ -35,13 +35,13 @@ describe("Student State Machine", () => {
     test("updates the first name via 'updateFirstName' method", () => {
       studentStateMachine.updateFirstName("Michael");
 
-      expect(studentStateMachine.firstName).toEqual("Michael");
+      expect(studentStateMachine.firstName.value).toEqual("Michael");
     });
 
     test("updates the last name via 'updateLastName' method", () => {
       studentStateMachine.updateLastName("Bash");
 
-      expect(studentStateMachine.lastName).toEqual("Bash");
+      expect(studentStateMachine.lastName.value).toEqual("Bash");
     });
   });
 

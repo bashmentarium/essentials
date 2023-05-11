@@ -1,5 +1,18 @@
 type StudentOrError = Student | StudentError;
 
+interface StudentName {
+  value: string;
+}
+
+interface StudentFullName {
+  firstName: StudentName;
+  lastName: StudentName;
+}
+
+interface StudentEmail {
+  value: string;
+}
+
 interface StudentProps {
   firstName: string;
   lastName: string;
@@ -53,9 +66,9 @@ export const errorObj = (message: string): StudentError => ({
 export type StudentError = { error: boolean; message: string };
 
 export class Student {
-  private _firstName: string;
-  private _lastName: string;
-  private _studentEmail: string;
+  private _firstName: StudentName;
+  private _lastName: StudentName;
+  private _studentEmail: StudentEmail;
 
   private constructor(firstName: string, lastName: string) {
     const props: StudentProps = { firstName, lastName };
@@ -64,9 +77,11 @@ export class Student {
 
     const { formattedFirstName, formattedLastName } = formatProps(props);
 
-    this._firstName = firstName;
-    this._lastName = lastName;
-    this._studentEmail = `${formattedFirstName}${formattedLastName}@essentialist.dev`;
+    const studentEmail = `${formattedFirstName}${formattedLastName}@essentialist.dev`;
+
+    this._firstName = { value: firstName };
+    this._lastName = { value: lastName };
+    this._studentEmail = { value: studentEmail };
   }
 
   static create(firstName: string, lastName: string): StudentOrError {
@@ -77,15 +92,15 @@ export class Student {
     }
   }
 
-  get firstName(): string {
+  get firstName(): StudentName {
     return this._firstName;
   }
 
-  get lastName(): string {
+  get lastName(): StudentName {
     return this._lastName;
   }
 
-  get emailAddress(): string {
+  get emailAddress(): StudentEmail {
     return this._studentEmail;
   }
 
@@ -93,7 +108,7 @@ export class Student {
     try {
       validateFirstName(firstName);
 
-      this._firstName = firstName;
+      this._firstName = { value: firstName };
     } catch (e: any) {
       return errorObj(e.message);
     }
@@ -103,7 +118,7 @@ export class Student {
     try {
       validateLastName(lastName);
 
-      this._lastName = lastName;
+      this._lastName = { value: lastName };
     } catch (e: any) {
       return errorObj(e.message);
     }
