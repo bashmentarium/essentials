@@ -37,6 +37,12 @@ describe("Student State Machine", () => {
 
       expect(studentStateMachine.firstName).toEqual("Michael");
     });
+
+    test("updates the last name via 'updateLastName' method", () => {
+      studentStateMachine.updateLastName("Bash");
+
+      expect(studentStateMachine.lastName).toEqual("Bash");
+    });
   });
 
   describe("returns an error object", () => {
@@ -45,14 +51,25 @@ describe("Student State Machine", () => {
     let invalidFirstName = "";
     let invalidLastName = "";
 
+    const student = Student.create(firstName, lastName) as Student;
+
+    const studentWithInvalidFirstName = Student.create(
+      invalidFirstName,
+      lastName
+    );
+    const studentWithInvalidLastName = Student.create(
+      firstName,
+      invalidLastName
+    );
+    const studentWithInvalidFirstAndLastName = Student.create(
+      invalidFirstName,
+      invalidLastName
+    );
+
     test("when no 'firstName' or 'lastName' provided", () => {
-      expect(Student.create(invalidFirstName, lastName)).toEqual(
-        errorObj(INCOMPLETE_ERROR)
-      );
-      expect(Student.create(firstName, invalidLastName)).toEqual(
-        errorObj(INCOMPLETE_ERROR)
-      );
-      expect(Student.create(invalidFirstName, invalidLastName)).toEqual(
+      expect(studentWithInvalidFirstName).toEqual(errorObj(INCOMPLETE_ERROR));
+      expect(studentWithInvalidLastName).toEqual(errorObj(INCOMPLETE_ERROR));
+      expect(studentWithInvalidFirstAndLastName).toEqual(
         errorObj(INCOMPLETE_ERROR)
       );
     });
@@ -89,22 +106,18 @@ describe("Student State Machine", () => {
     });
 
     test("when updating 'firstName' with invalid value", () => {
-      const student = Student.create(firstName, lastName) as Student;
-
       invalidFirstName = "FirstNameLongerThan10Characters";
 
-      expect(() => student.updateFirstName(invalidFirstName)).toThrowError(
-        FIRST_NAME_LENGTH_ERROR
+      expect(student.updateFirstName(invalidFirstName)).toEqual(
+        errorObj(FIRST_NAME_LENGTH_ERROR)
       );
     });
 
     test("when updating 'lastName' with invalid value", () => {
-      const student = Student.create(firstName, lastName) as Student;
-
       invalidLastName = "LastNameLongerThan15Characters";
 
-      expect(() => student.updateLastName(invalidLastName)).toThrowError(
-        LAST_NAME_LENGTH_ERROR
+      expect(student.updateLastName(invalidLastName)).toEqual(
+        errorObj(LAST_NAME_LENGTH_ERROR)
       );
     });
   });

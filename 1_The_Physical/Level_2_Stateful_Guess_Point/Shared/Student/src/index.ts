@@ -94,15 +94,23 @@ export class Student {
     return this._studentEmail;
   }
 
-  updateFirstName(firstName: string): void {
-    validateFirstName(firstName);
+  updateFirstName(firstName: string): void | StudentError {
+    try {
+      validateFirstName(firstName);
 
-    this._firstName = firstName;
+      this._firstName = firstName;
+    } catch (e: any) {
+      return errorObj(e.message);
+    }
   }
 
-  updateLastName(lastName: string): void {
-    validateLastName(lastName);
+  updateLastName(lastName: string): void | StudentError {
+    try {
+      validateLastName(lastName);
 
-    this._lastName = lastName;
+      this._lastName = lastName;
+    } catch (e: any) {
+      return errorObj(e.message);
+    }
   }
 }
