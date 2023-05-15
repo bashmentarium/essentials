@@ -4,12 +4,18 @@ import {
   validateProps,
 } from "./utils/validation";
 
-interface StudentName {
+export interface StudentName {
   value: string;
 }
 
-interface StudentEmail {
+export interface StudentEmail {
   value: string;
+}
+
+export interface StudentProfile {
+  firstName: StudentName;
+  lastName: StudentName;
+  studentEmail: StudentEmail;
 }
 
 export interface StudentProps {
