@@ -13,4 +13,12 @@ describe("Result", () => {
     expect(result.studentProfile).toEqual(studentProfile);
     expect(result.errors).toEqual([]);
   });
+
+  it("should return an error object when creation is not valid", () => {
+    const error = { message: "Invalid first name", type: "INVALID_FIRST_NAME" };
+
+    const result = new Result({ studentProfile: null, errors: [error] });
+    expect(result.studentProfile).toEqual(null);
+    expect(result.errors).toEqual([error]);
+  });
 });

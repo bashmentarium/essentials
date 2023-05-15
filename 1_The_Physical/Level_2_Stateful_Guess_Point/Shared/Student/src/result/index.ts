@@ -1,12 +1,17 @@
 import { StudentProfile } from "../index";
 
+interface Error {
+  message: string;
+  type: string;
+}
+
 interface ResultI {
-  studentProfile: StudentProfile;
+  studentProfile: StudentProfile | null;
   errors: Error[];
 }
 
 export class Result {
-  studentProfile: StudentProfile;
+  studentProfile: StudentProfile | null;
   errors: Error[];
 
   constructor(props: ResultI) {
@@ -16,5 +21,9 @@ export class Result {
 
   static isValid(studentProfile: StudentProfile): Result {
     return new Result({ studentProfile, errors: [] });
+  }
+
+  static isNotValid(error: Error): Result {
+    return new Result({ studentProfile: null, errors: [error] });
   }
 }
