@@ -1,56 +1,57 @@
+import { StudentFirstName } from "./first-name";
+import { StudentLastName } from "./last-name";
 import {
   Student,
-  errorObj,
-  INCOMPLETE_ERROR,
-  FIRST_NAME_LENGTH_ERROR,
-  LAST_NAME_LENGTH_ERROR,
+  FIRST_NAME_EMPTY_ERROR,
+  FIRST_NAME_TOO_LONG_ERROR,
+  FIRST_NAME_TOO_SHORT_ERROR,
+  LAST_NAME_EMPTY_ERROR,
+  LAST_NAME_TOO_LONG_ERROR,
+  LAST_NAME_TOO_SHORT_ERROR,
   UPDATE_FIRST_NAME,
   UPDATE_LAST_NAME,
 } from "./index";
+import { Result } from "./result";
 
 describe("Student State Machine", () => {
   describe("creates a Student object that", () => {
     const firstName = "John";
     const lastName = "Doe";
-    let studentStateMachine: Student;
+    let result: Result<Student | null>;
 
     beforeEach(() => {
-      studentStateMachine = Student.create(firstName, lastName) as Student;
+      result = Student.create(firstName, lastName);
     });
 
-    test("accepts 'firstName' and 'lastName' as arguments and assigns them as properties", () => {
-      expect(studentStateMachine.firstName).toBeDefined();
-      expect(studentStateMachine.lastName).toBeDefined();
-    });
-
-    test("assigns 'firstName' and 'lastName' arguments as instance properties", () => {
-      expect(studentStateMachine.firstName.value).toEqual(firstName);
-      expect(studentStateMachine.lastName.value).toEqual(lastName);
+    test("accepts and assigns 'firstName' and 'lastName' as properties", () => {
+      expect(result).toBeInstanceOf(Result<Student>);
+      expect(result.studentProfile?.firstName).toEqual(firstName);
+      expect(result.studentProfile?.lastName).toEqual(lastName);
     });
 
     test("creates the 'studentEmail' property from 'firstName' and 'lastName'", () => {
-      expect(studentStateMachine.emailAddress.value).toEqual(
+      expect(result.studentProfile?.studentEmail).toEqual(
         "jodoe@essentialist.dev"
       );
     });
 
     test("updates the first name via 'updateFirstName' method", () => {
-      studentStateMachine.updateFirstName("Michael");
+      result.updateFirstName("Michael");
 
-      expect(studentStateMachine.firstName.value).toEqual("Michael");
+      expect(result.studentProfile?.firstName).toEqual("Michael");
     });
 
     test("updates the last name via 'updateLastName' method", () => {
-      studentStateMachine.updateLastName("Bash");
+      result.updateLastName("Bash");
 
-      expect(studentStateMachine.lastName.value).toEqual("Bash");
+      expect(result.studentProfile?.lastName).toEqual("Bash");
     });
 
     test("registers updating events in a 'events' property", () => {
-      studentStateMachine.updateLastName("Enrgy");
-      studentStateMachine.updateFirstName("Henry");
+      result.updateLastName("Enrgy");
+      result.updateFirstName("Henry");
 
-      expect(studentStateMachine.events).toEqual([
+      expect(result.events).toEqual([
         { type: UPDATE_LAST_NAME, payload: "Enrgy" },
         { type: UPDATE_FIRST_NAME, payload: "Henry" },
       ]);
@@ -60,77 +61,120 @@ describe("Student State Machine", () => {
   describe("returns an Error object", () => {
     const firstName = "John";
     const lastName = "Doe";
-    let invalidFirstName = "";
-    let invalidLastName = "";
-
-    const student = Student.create(firstName, lastName) as Student;
+    let emptyFirstName = "";
+    let emptyLastName = "";
+    let invalidFirstName: string, invalidLastName: string;
 
     const studentWithInvalidFirstName = Student.create(
-      invalidFirstName,
+      emptyFirstName,
       lastName
     );
-    const studentWithInvalidLastName = Student.create(
-      firstName,
-      invalidLastName
-    );
-    const studentWithInvalidFirstAndLastName = Student.create(
-      invalidFirstName,
-      invalidLastName
-    );
+    const studentWithInvalidLastName = Student.create(firstName, emptyLastName);
 
-    test("when no 'firstName' or 'lastName' provided", () => {
-      expect(studentWithInvalidFirstName).toEqual(errorObj(INCOMPLETE_ERROR));
-      expect(studentWithInvalidLastName).toEqual(errorObj(INCOMPLETE_ERROR));
-      expect(studentWithInvalidFirstAndLastName).toEqual(
-        errorObj(INCOMPLETE_ERROR)
-      );
+    test("when an empty 'firstName' is provided", () => {
+      expect(studentWithInvalidFirstName).toBeInstanceOf(Result<null>);
+      expect(studentWithInvalidFirstName).toMatchObject({
+        studentProfile: null,
+        errors: [
+          {
+            message: FIRST_NAME_EMPTY_ERROR,
+          },
+        ],
+      });
+    });
+
+    test("when an empty 'lastName' is provided", () => {
+      expect(studentWithInvalidLastName).toBeInstanceOf(Result<null>);
+      expect(studentWithInvalidLastName).toMatchObject({
+        studentProfile: null,
+        errors: [
+          {
+            message: LAST_NAME_EMPTY_ERROR,
+          },
+        ],
+      });
     });
 
     test("when 'firstName' is shorter than 2 characters", () => {
       invalidFirstName = "J";
-      expect(Student.create(invalidFirstName, lastName)).toEqual(
-        errorObj(FIRST_NAME_LENGTH_ERROR)
-      );
+
+      expect(studentWithInvalidLastName).toBeInstanceOf(Result<null>);
+      expect(Student.create(invalidFirstName, lastName)).toMatchObject({
+        studentProfile: null,
+        errors: [
+          {
+            message: FIRST_NAME_TOO_SHORT_ERROR,
+          },
+        ],
+      });
     });
 
     test("when 'firstName' is longer than 10 characters", () => {
       invalidFirstName = "JohnJohnJohn";
 
-      expect(Student.create(invalidFirstName, lastName)).toEqual(
-        errorObj(FIRST_NAME_LENGTH_ERROR)
-      );
+      expect(studentWithInvalidLastName).toBeInstanceOf(Result<null>);
+      expect(Student.create(invalidFirstName, lastName)).toMatchObject({
+        studentProfile: null,
+        errors: [
+          {
+            message: FIRST_NAME_TOO_LONG_ERROR,
+          },
+        ],
+      });
     });
 
     test("when 'lastName' is shorter than 2 characters", () => {
-      invalidLastName = "A";
+      invalidLastName = "D";
 
-      expect(Student.create(firstName, invalidLastName)).toEqual(
-        errorObj(LAST_NAME_LENGTH_ERROR)
-      );
+      expect(studentWithInvalidLastName).toBeInstanceOf(Result<null>);
+      expect(Student.create(firstName, invalidLastName)).toMatchObject({
+        studentProfile: null,
+        errors: [
+          {
+            message: LAST_NAME_TOO_SHORT_ERROR,
+          },
+        ],
+      });
     });
 
     test("when 'lastName' is longer than 15 characters", () => {
-      invalidLastName = "DoeDoeDoeDoeDoeDoe";
+      invalidLastName = "JohnJohnJohnJohnJohn";
 
-      expect(Student.create(firstName, invalidLastName)).toEqual(
-        errorObj(LAST_NAME_LENGTH_ERROR)
-      );
+      expect(studentWithInvalidLastName).toBeInstanceOf(Result<null>);
+      expect(Student.create(firstName, invalidLastName)).toMatchObject({
+        studentProfile: null,
+        errors: [
+          {
+            message: LAST_NAME_TOO_LONG_ERROR,
+          },
+        ],
+      });
     });
 
     test("when updating 'firstName' with invalid value", () => {
       invalidFirstName = "FirstNameLongerThan10Characters";
 
-      expect(student.updateFirstName(invalidFirstName)).toEqual(
-        errorObj(FIRST_NAME_LENGTH_ERROR)
-      );
+      expect(Student.create(invalidFirstName, lastName)).toMatchObject({
+        studentProfile: null,
+        errors: [
+          {
+            message: FIRST_NAME_TOO_LONG_ERROR,
+          },
+        ],
+      });
     });
 
     test("when updating 'lastName' with invalid value", () => {
       invalidLastName = "LastNameLongerThan15Characters";
 
-      expect(student.updateLastName(invalidLastName)).toEqual(
-        errorObj(LAST_NAME_LENGTH_ERROR)
-      );
+      expect(Student.create(firstName, invalidLastName)).toMatchObject({
+        studentProfile: null,
+        errors: [
+          {
+            message: LAST_NAME_TOO_LONG_ERROR,
+          },
+        ],
+      });
     });
   });
 });
