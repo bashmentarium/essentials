@@ -1,3 +1,9 @@
+import {
+  validateFirstName,
+  validateLastName,
+  validateProps,
+} from "./utils/validation";
+
 interface StudentName {
   value: string;
 }
@@ -6,7 +12,7 @@ interface StudentEmail {
   value: string;
 }
 
-interface StudentProps {
+export interface StudentProps {
   firstName: string;
   lastName: string;
 }
@@ -27,27 +33,6 @@ export const FIRST_NAME_LENGTH_ERROR =
   "Students first name must be at least 2 characters short and 10 characters long";
 export const LAST_NAME_LENGTH_ERROR =
   "Students last name must be at least 2 characters short and 15 characters long";
-
-const validateFirstName = (firstName: string) => {
-  if (firstName.length < 2 || firstName.length > 10) {
-    throw new Error(FIRST_NAME_LENGTH_ERROR);
-  }
-};
-
-const validateLastName = (lastName: string) => {
-  if (lastName.length < 2 || lastName.length > 15) {
-    throw new Error(LAST_NAME_LENGTH_ERROR);
-  }
-};
-
-const validateProps = (props: StudentProps) => {
-  if (!props.firstName || !props.lastName) {
-    throw new Error(INCOMPLETE_ERROR);
-  }
-
-  validateFirstName(props.firstName);
-  validateLastName(props.lastName);
-};
 
 const formatProps = ({ firstName, lastName }: StudentProps) => {
   const formattedFirstName = firstName.slice(0, 2).toLowerCase();
@@ -78,8 +63,6 @@ export class Student {
   private constructor(firstName: string, lastName: string) {
     const props: StudentProps = { firstName, lastName };
 
-    validateProps(props);
-
     const { formattedFirstName, formattedLastName } = formatProps(props);
 
     const studentEmail = `${formattedFirstName}${formattedLastName}@essentialist.dev`;
@@ -91,6 +74,8 @@ export class Student {
 
   static create(firstName: string, lastName: string): StudentOrError {
     try {
+      validateProps({ firstName, lastName });
+
       return new Student(firstName, lastName);
     } catch (e: any) {
       return errorObj(e.message);
