@@ -1,23 +1,23 @@
 import { TrafficLight } from "./index";
 
 describe("Traffic Light", () => {
-  it("should have the OFF status when launched", () => {
-    const trafficLight = new TrafficLight();
+  let trafficLight: TrafficLight;
 
+  beforeEach(() => {
+    trafficLight = new TrafficLight();
+  });
+
+  it("should have the OFF status when launched", () => {
     expect(trafficLight.status).toEqual("OFF");
   });
 
   it("can be turned ON", () => {
-    const trafficLight = new TrafficLight();
-
     trafficLight.turnOn();
 
     expect(trafficLight.status).toEqual("ON");
   });
 
   it("can be turned OFF", () => {
-    const trafficLight = new TrafficLight();
-
     trafficLight.turnOn();
     trafficLight.turnOff();
 
