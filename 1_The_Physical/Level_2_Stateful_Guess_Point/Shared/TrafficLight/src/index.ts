@@ -1,9 +1,9 @@
 import { Status, StatusOptions } from "./status";
-import { Color } from "./color";
+import { Color, ColorOptions } from "./color";
 
 export class TrafficLight {
   status: StatusOptions;
-  color: Color = Color.create("RED");
+  color: Color = Color.create(ColorOptions.RED);
 
   private constructor() {
     this.status = Status.create(StatusOptions.OFF).value as StatusOptions;
@@ -21,7 +21,7 @@ export class TrafficLight {
     this.status = Status.create(StatusOptions.OFF).value as StatusOptions;
   }
 
-  get currentColor(): string {
+  get colorOnDisplay(): string {
     return this.color.value;
   }
 
