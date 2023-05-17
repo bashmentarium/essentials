@@ -1,5 +1,11 @@
 export class TrafficLight {
-  public getStatus(): string {
-    return "OFF";
+  private _status: string = "OFF";
+
+  get status(): string {
+    return this._status;
+  }
+
+  turnOn(): void {
+    this._status = "ON";
   }
 }

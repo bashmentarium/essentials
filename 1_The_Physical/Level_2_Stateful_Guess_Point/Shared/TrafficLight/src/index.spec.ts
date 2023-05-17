@@ -4,6 +4,14 @@ describe("Traffic Light", () => {
   it("should have the OFF status when launched", () => {
     const trafficLight = new TrafficLight();
 
-    expect(trafficLight.getStatus()).toEqual("OFF");
+    expect(trafficLight.status).toEqual("OFF");
+  });
+
+  it("can be turned ON", () => {
+    const trafficLight = new TrafficLight();
+
+    trafficLight.turnOn();
+
+    expect(trafficLight.status).toEqual("ON");
   });
 });
