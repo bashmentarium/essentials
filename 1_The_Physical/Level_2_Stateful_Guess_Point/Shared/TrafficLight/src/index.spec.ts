@@ -14,4 +14,13 @@ describe("Traffic Light", () => {
 
     expect(trafficLight.status).toEqual("ON");
   });
+
+  it("can be turned OFF", () => {
+    const trafficLight = new TrafficLight();
+
+    trafficLight.turnOn();
+    trafficLight.turnOff();
+
+    expect(trafficLight.status).toEqual("OFF");
+  });
 });

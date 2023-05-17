@@ -8,4 +8,8 @@ export class TrafficLight {
   turnOn(): void {
     this._status = "ON";
   }
+
+  turnOff(): void {
+    this._status = "OFF";
+  }
 }
