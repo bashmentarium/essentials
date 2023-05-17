@@ -8,7 +8,7 @@ export class TrafficLight {
   }
 
   get status(): string {
-    return this._status.status;
+    return this._status.value;
   }
 
   turnOn(): void {

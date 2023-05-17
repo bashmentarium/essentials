@@ -23,4 +23,17 @@ describe("Traffic Light", () => {
 
     expect(trafficLight.status).toEqual("OFF");
   });
+
+  it("should have the OFF status when turned OFF", () => {
+    trafficLight.turnOn();
+    trafficLight.turnOff();
+
+    expect(trafficLight.status).toEqual("OFF");
+  });
+
+  it("should have the ON status when turned ON", () => {
+    trafficLight.turnOn();
+
+    expect(trafficLight.status).toEqual("ON");
+  });
 });

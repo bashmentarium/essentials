@@ -10,7 +10,7 @@ export class Status {
     this._status = statusOption;
   }
 
-  get status(): string {
+  get value(): string {
     return this._status;
   }
 }

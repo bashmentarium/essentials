@@ -4,6 +4,6 @@ describe("Status", () => {
   it("should start with OFF status option", () => {
     const status = new Status(StatusOptions.OFF);
 
-    expect(status.status).toEqual("OFF");
+    expect(status.value).toEqual("OFF");
   });
 });
