@@ -1,27 +1,31 @@
 import { Status, StatusOptions } from "./status";
-import { Color, ColorOptions } from "./color";
+import { Color } from "./color";
 
 export class TrafficLight {
-  private _status: Status;
-  private _color: Color = new Color(ColorOptions.RED);
+  status: StatusOptions;
+  color: Color = Color.create("RED");
 
-  constructor() {
-    this._status = new Status(StatusOptions.OFF);
+  private constructor() {
+    this.status = Status.create(StatusOptions.OFF).value as StatusOptions;
   }
 
-  get status(): string {
-    return this._status.value;
-  }
-
-  get color(): string {
-    return this._color.value;
+  static create(): TrafficLight {
+    return new TrafficLight();
   }
 
   turnOn(): void {
-    this._status = new Status(StatusOptions.ON);
+    this.status = Status.create(StatusOptions.ON).value as StatusOptions;
   }
 
   turnOff(): void {
-    this._status = new Status(StatusOptions.OFF);
+    this.status = Status.create(StatusOptions.OFF).value as StatusOptions;
+  }
+
+  get currentColor(): string {
+    return this.color.value;
+  }
+
+  get currentStatus(): string {
+    return this.status;
   }
 }

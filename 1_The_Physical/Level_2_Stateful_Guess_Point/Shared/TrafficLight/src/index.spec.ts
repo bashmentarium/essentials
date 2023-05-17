@@ -4,7 +4,7 @@ describe("Traffic Light", () => {
   let trafficLight: TrafficLight;
 
   beforeEach(() => {
-    trafficLight = new TrafficLight();
+    trafficLight = TrafficLight.create();
   });
 
   it("should have the OFF status when launched", () => {
@@ -40,6 +40,6 @@ describe("Traffic Light", () => {
   it("should display the color RED when turned ON", () => {
     trafficLight.turnOn();
 
-    expect(trafficLight.color).toEqual("RED");
+    expect(trafficLight.color.value).toEqual("RED");
   });
 });

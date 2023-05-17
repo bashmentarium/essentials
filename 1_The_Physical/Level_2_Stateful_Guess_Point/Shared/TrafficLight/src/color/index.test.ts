@@ -2,20 +2,20 @@ import { Color, ColorOptions } from "./index";
 
 describe("Color", () => {
   it("can return RED color option", () => {
-    const color = new Color(ColorOptions.RED);
+    const redColor: Color = Color.create(ColorOptions.RED);
 
-    expect(color.value).toBe(ColorOptions.RED);
+    expect(redColor.value).toBe("RED");
   });
 
   it("can return YELLOW color option", () => {
-    const color = new Color(ColorOptions.YELLOW);
+    const yellowColor: Color = Color.create(ColorOptions.YELLOW);
 
-    expect(color.value).toBe(ColorOptions.YELLOW);
+    expect(yellowColor.value).toBe("YELLOW");
   });
 
   it("can return GREEN color option", () => {
-    const color = new Color(ColorOptions.GREEN);
+    const greenColor: Color = Color.create(ColorOptions.GREEN);
 
-    expect(color.value).toBe(ColorOptions.GREEN);
+    expect(greenColor.value).toBe("GREEN");
   });
 });
