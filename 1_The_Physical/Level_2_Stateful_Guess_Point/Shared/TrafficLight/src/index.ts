@@ -1,15 +1,21 @@
+import { Status, StatusOptions } from "./status";
+
 export class TrafficLight {
-  private _status: string = "OFF";
+  private _status: Status;
+
+  constructor() {
+    this._status = new Status(StatusOptions.OFF);
+  }
 
   get status(): string {
-    return this._status;
+    return this._status.status;
   }
 
   turnOn(): void {
-    this._status = "ON";
+    this._status = new Status(StatusOptions.ON);
   }
 
   turnOff(): void {
-    this._status = "OFF";
+    this._status = new Status(StatusOptions.OFF);
   }
 }
