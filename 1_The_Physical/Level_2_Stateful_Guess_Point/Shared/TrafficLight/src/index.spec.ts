@@ -36,4 +36,10 @@ describe("Traffic Light", () => {
 
     expect(trafficLight.status).toEqual("ON");
   });
+
+  it("should display the color RED when turned ON", () => {
+    trafficLight.turnOn();
+
+    expect(trafficLight.color).toEqual("RED");
+  });
 });
