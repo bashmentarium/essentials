@@ -1,6 +1,6 @@
 import { TrafficLight } from "./index";
-import { StatusOptions } from "./status";
-import { Color, ColorOptions } from "./color";
+import { StatusOptions } from "../status";
+import { Color, ColorOptions } from "../color";
 
 describe("Traffic Light", () => {
   let trafficLight: TrafficLight;
