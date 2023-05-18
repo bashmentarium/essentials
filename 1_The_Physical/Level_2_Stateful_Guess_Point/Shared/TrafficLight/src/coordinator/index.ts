@@ -1,5 +1,6 @@
 import { Color, ColorOptions } from "../color";
 import { TrafficLight } from "../traffic_light";
+import { secondsToColor } from "../utils/seconds-to-color";
 
 export class Coordinator {
   private _timer: NodeJS.Timeout | undefined;
@@ -49,18 +50,9 @@ export class Coordinator {
   private changeTrafficLightColor(): void {
     const remainingSeconds = this._secondsPassed % 60;
 
-    if (remainingSeconds > 35 && remainingSeconds < 60) {
-      const redColor = Color.create(ColorOptions.RED);
-      this._trafficLight && this._trafficLight["changeColor"](redColor);
-    } else if (remainingSeconds >= 31 && remainingSeconds <= 35) {
-      const yellowColor = Color.create(ColorOptions.YELLOW);
-      this._trafficLight && this._trafficLight["changeColor"](yellowColor);
-    } else if (remainingSeconds === 1) {
-      const greenColor = Color.create(ColorOptions.GREEN);
-      this._trafficLight && this._trafficLight["changeColor"](greenColor);
-    } else if (remainingSeconds >= 0 && remainingSeconds <= 30) {
-      const greenColor = Color.create(ColorOptions.GREEN);
-      this._trafficLight && this._trafficLight["changeColor"](greenColor);
-    }
+    const colorBasedOnRemainingSeconds = secondsToColor(remainingSeconds);
+
+    this._trafficLight &&
+      this._trafficLight["changeColor"](colorBasedOnRemainingSeconds);
   }
 }
