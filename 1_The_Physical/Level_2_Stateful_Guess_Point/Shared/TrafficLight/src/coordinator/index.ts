@@ -1,4 +1,4 @@
-import { Color } from "../color";
+import { Color, ColorOptions } from "../color";
 import { TrafficLight } from "../traffic_light";
 
 export class Coordinator {
@@ -23,7 +23,7 @@ export class Coordinator {
   }
 
   private start(): void {
-    const color = Color.create("RED");
+    const color = Color.create(ColorOptions.RED);
     this.startTrafficLight(color);
   }
 
@@ -37,10 +37,18 @@ export class Coordinator {
   private startTimer(): void {
     this._timer = setInterval(() => {
       this._secondsPassed++;
+      this.changeTrafficLightColor();
     }, 1000);
   }
 
-  static stopTimer(coordinator: Coordinator): void {
+  static stop(coordinator: Coordinator): void {
     clearInterval(coordinator._timer);
+  }
+
+  private changeTrafficLightColor(): void {
+    if (this._secondsPassed >= 30) {
+      const yellowColor = Color.create(ColorOptions.YELLOW);
+      this._trafficLight && this._trafficLight["changeColor"](yellowColor);
+    }
   }
 }

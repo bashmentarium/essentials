@@ -30,4 +30,8 @@ export class TrafficLight {
   get colorOnDisplay(): ColorType | null {
     return this._colorOnDisplay?.value ?? null;
   }
+
+  private changeColor(color: Color): void {
+    this._colorOnDisplay = color;
+  }
 }

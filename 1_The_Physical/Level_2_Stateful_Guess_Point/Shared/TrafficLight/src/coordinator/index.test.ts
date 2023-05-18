@@ -10,6 +10,8 @@ describe("Coordinator", () => {
   let yellowColor: Color = Color.create(ColorOptions.YELLOW);
   let greenColor: Color = Color.create(ColorOptions.GREEN);
 
+  jest.useFakeTimers();
+
   beforeAll(() => {
     trafficLight = TrafficLight.create();
     coordinator = Coordinator.createAndStart(trafficLight);
@@ -20,7 +22,23 @@ describe("Coordinator", () => {
     expect(coordinator.getSecondsPassed).toBeDefined();
   });
 
+  it("should know that 29 seconds have passed", () => {
+    jest.advanceTimersByTime(29000);
+
+    expect(coordinator.getSecondsPassed()).toEqual(29);
+  });
+
+  it("should know that up until 30 seconds, the Traffic Light should show 'RED'", () => {
+    expect(trafficLight.colorOnDisplay).toEqual(redColor.value);
+  });
+
+  it("after 30 seconds, the TrafficLight should automatically receive and show 'YELLOW'", () => {
+    jest.advanceTimersByTime(1000);
+
+    expect(trafficLight.colorOnDisplay).toEqual(yellowColor.value);
+  });
+
   afterAll(() => {
-    Coordinator.stopTimer(coordinator);
+    Coordinator.stop(coordinator);
   });
 });
