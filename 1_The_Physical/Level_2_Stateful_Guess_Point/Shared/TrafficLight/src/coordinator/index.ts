@@ -55,5 +55,10 @@ export class Coordinator {
       const greenColor = Color.create(ColorOptions.GREEN);
       this._trafficLight && this._trafficLight["changeColor"](greenColor);
     }
+
+    if (this._secondsPassed >= 60) {
+      const redColor = Color.create(ColorOptions.RED);
+      this._trafficLight && this._trafficLight["changeColor"](redColor);
+    }
   }
 }

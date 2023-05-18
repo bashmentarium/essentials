@@ -36,12 +36,27 @@ describe("Coordinator", () => {
     jest.advanceTimersByTime(1000);
 
     expect(trafficLight.colorOnDisplay).toEqual(yellowColor.value);
+
+    expect(trafficLight.colorOnDisplay).not.toEqual(greenColor.value);
+    expect(trafficLight.colorOnDisplay).not.toEqual(redColor.value);
   });
 
   it("after another 5 seconds, the Traffic Light should automatically receive and show 'GREEN'", () => {
     jest.advanceTimersByTime(5000);
 
     expect(trafficLight.colorOnDisplay).toEqual(greenColor.value);
+
+    expect(trafficLight.colorOnDisplay).not.toEqual(yellowColor.value);
+    expect(trafficLight.colorOnDisplay).not.toEqual(redColor.value);
+  });
+
+  it("after another 25 seconds, the Traffic Light should automatically receive and show 'RED'", () => {
+    jest.advanceTimersByTime(25000);
+
+    expect(trafficLight.colorOnDisplay).toEqual(redColor.value);
+
+    expect(trafficLight.colorOnDisplay).not.toEqual(yellowColor.value);
+    expect(trafficLight.colorOnDisplay).not.toEqual(greenColor.value);
   });
 
   afterAll(() => {
