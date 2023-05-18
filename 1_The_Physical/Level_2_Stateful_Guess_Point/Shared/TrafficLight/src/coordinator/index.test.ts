@@ -15,7 +15,7 @@ describe("Coordinator", () => {
   beforeAll(() => {
     trafficLight = TrafficLight.create();
     coordinator = Coordinator.createAndStart(trafficLight);
-    trafficLight.turnOn(redColor);
+    trafficLight.turnOn();
   });
 
   it("should have a 'secondsPassed' property", () => {

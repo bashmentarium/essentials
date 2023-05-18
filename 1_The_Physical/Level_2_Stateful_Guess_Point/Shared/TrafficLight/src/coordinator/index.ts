@@ -29,7 +29,7 @@ export class Coordinator {
 
   private startTrafficLight(color: Color): void {
     if (this._trafficLight) {
-      this._trafficLight.turnOn(color);
+      this._trafficLight.turnOn();
       this.startTimer();
     }
   }
