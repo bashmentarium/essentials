@@ -2,21 +2,18 @@ import { Color } from "../color";
 import { TrafficLight } from "../traffic_light";
 
 export class Coordinator {
-  private timer: NodeJS.Timeout | null = null;
-  private trafficLight: TrafficLight | undefined;
-  private seconds: number = 0;
+  private _timer: NodeJS.Timeout | undefined;
+  private _trafficLight: TrafficLight | undefined;
+  private _secondsPassed: number = 0;
 
   private constructor(trafficLight?: TrafficLight | undefined) {
-    this.trafficLight = trafficLight;
+    this._trafficLight = trafficLight;
   }
 
-  get secondsPassed(): number {
-    return this.seconds;
-  }
-
-  private start(): void {
-    const color = Color.create("RED");
-    this.startTrafficLight(color);
+  getSecondsPassed(): number | undefined {
+    if (this._secondsPassed > 0) {
+      return this._secondsPassed;
+    }
   }
 
   static createAndStart(trafficLight: TrafficLight): Coordinator {
@@ -25,20 +22,25 @@ export class Coordinator {
     return coordinator;
   }
 
+  private start(): void {
+    const color = Color.create("RED");
+    this.startTrafficLight(color);
+  }
+
   private startTrafficLight(color: Color): void {
-    if (this.trafficLight) {
-      this.trafficLight.turnOn(color);
+    if (this._trafficLight) {
+      this._trafficLight.turnOn(color);
       this.startTimer();
     }
   }
 
   private startTimer(): void {
-    this.timer = setInterval(() => {
-      this.seconds++;
+    this._timer = setInterval(() => {
+      this._secondsPassed++;
     }, 1000);
   }
 
   static stopTimer(coordinator: Coordinator): void {
-    clearInterval(coordinator.secondsPassed);
+    clearInterval(coordinator._timer);
   }
 }
