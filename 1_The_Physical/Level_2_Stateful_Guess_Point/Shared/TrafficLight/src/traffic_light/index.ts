@@ -1,6 +1,5 @@
 import { Status, StatusOptions } from "../status";
-import { Color, ColorType } from "../color";
-import { ColorOptions } from "../color";
+import { Color, ColorType, ColorOptions } from "../color";
 
 export class TrafficLight {
   private _status: Status;
