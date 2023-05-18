@@ -4,22 +4,24 @@ import { Color, ColorOptions } from "../color";
 
 describe("Coordinator", () => {
   it("should have a 'secondsPassed' property", () => {
-    const redColor = Color.create(ColorOptions.RED);
     const trafficLight = TrafficLight.create();
-    const coordinator = Coordinator.create(trafficLight);
+    const coordinator = Coordinator.createAndStart(trafficLight);
 
+    const redColor = Color.create(ColorOptions.RED);
     trafficLight.turnOn(redColor);
 
     expect(coordinator.secondsPassed).toBeDefined();
   });
 
-  it("should start the Traffic Light with the color RED", () => {
-    const redColor = Color.create(ColorOptions.RED);
+  it("should pass 'YELLOW' to Traffic Light after 30 seconds", () => {
     const trafficLight = TrafficLight.create();
-    const coordinator = Coordinator.create(trafficLight);
+    const coordinator = Coordinator.createAndStart(trafficLight);
+
+    const redColor = Color.create(ColorOptions.RED);
+    const yellowColor = Color.create(ColorOptions.YELLOW);
 
     trafficLight.turnOn(redColor);
 
-    expect(trafficLight.colorOnDisplay).toEqual(ColorOptions.RED);
+    expect(coordinator.secondsPassed).toEqual(30);
   });
 });
