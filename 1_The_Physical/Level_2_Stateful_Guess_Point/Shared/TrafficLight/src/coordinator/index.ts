@@ -46,17 +46,15 @@ export class Coordinator {
   }
 
   private changeTrafficLightColor(): void {
-    if (this._secondsPassed >= 30) {
-      const yellowColor = Color.create(ColorOptions.YELLOW);
-      this._trafficLight && this._trafficLight["changeColor"](yellowColor);
-    }
+    const remainingSeconds = this._secondsPassed % 60;
 
-    if (this._secondsPassed >= 35) {
+    if (remainingSeconds >= 35 && remainingSeconds < 60) {
       const greenColor = Color.create(ColorOptions.GREEN);
       this._trafficLight && this._trafficLight["changeColor"](greenColor);
-    }
-
-    if (this._secondsPassed >= 60) {
+    } else if (remainingSeconds >= 30 && remainingSeconds < 35) {
+      const yellowColor = Color.create(ColorOptions.YELLOW);
+      this._trafficLight && this._trafficLight["changeColor"](yellowColor);
+    } else if (remainingSeconds >= 0 && remainingSeconds < 30) {
       const redColor = Color.create(ColorOptions.RED);
       this._trafficLight && this._trafficLight["changeColor"](redColor);
     }

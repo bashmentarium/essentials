@@ -59,6 +59,15 @@ describe("Coordinator", () => {
     expect(trafficLight.colorOnDisplay).not.toEqual(greenColor.value);
   });
 
+  it("after another 125 seconds, the Traffic Light should automatically receive and show 'RED'", () => {
+    jest.advanceTimersByTime(65000);
+
+    expect(trafficLight.colorOnDisplay).toEqual(redColor.value);
+
+    expect(trafficLight.colorOnDisplay).not.toEqual(yellowColor.value);
+    expect(trafficLight.colorOnDisplay).not.toEqual(greenColor.value);
+  });
+
   afterAll(() => {
     Coordinator.stop(coordinator);
   });
