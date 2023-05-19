@@ -7,7 +7,7 @@ export class TrafficLight {
   private _colorOnDisplay: Color | null = null;
 
   private constructor() {
-    this._status = Status.create(StatusOptions.OFF);
+    this._status = Status.create();
     this._startingColor = Color.create(ColorOptions.GREEN);
   }
 
