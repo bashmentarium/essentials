@@ -1,4 +1,3 @@
-import { Color, ColorOptions } from "../color";
 import { TrafficLight } from "../traffic_light";
 import { secondsToColor } from "../utils/seconds-to-color";
 
@@ -19,16 +18,11 @@ export class Coordinator {
 
   static createAndStart(trafficLight: TrafficLight): Coordinator {
     const coordinator = new Coordinator(trafficLight);
-    coordinator.start();
+    coordinator.startTrafficLight();
     return coordinator;
   }
 
-  private start(): void {
-    const color = Color.create(ColorOptions.RED);
-    this.startTrafficLight(color);
-  }
-
-  private startTrafficLight(color: Color): void {
+  private startTrafficLight(): void {
     if (this._trafficLight) {
       this._trafficLight.turnOn();
       this.startTimer();
