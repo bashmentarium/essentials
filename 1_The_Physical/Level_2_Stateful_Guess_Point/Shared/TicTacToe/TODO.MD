@@ -1,6 +1,8 @@
-- The board has 9 squares
-- X goes first, always
-- Alternate between players putting X's and O's on the board
-- Players can't play on a position already taken
-- A player with 3 X's or O's in a row, whether it be horizontal, vertical or diagonal, wins
-- If all 9 squares get filled and neither player achieves three in a row, then the game is a draw
+- The board is 3 x 3 cells
+- A cell can be free or occupied (by an X or an O)
+- There are two players involved in the game
+- Each player marks cells in turns with either X or O
+- First player can only put an X
+- An occupied cell can't be played on
+- Vertical line of same X or O makes the player a winner
+- If all 9 squares are filled - a draw is declared
