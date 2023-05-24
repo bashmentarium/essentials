@@ -1,11 +1,13 @@
-export class Player {
-  symbol: string;
+type PlayerSymbol = "X" | "O";
 
-  private constructor(symbol: string) {
+export class Player {
+  symbol: PlayerSymbol;
+
+  private constructor(symbol: PlayerSymbol) {
     this.symbol = symbol;
   }
 
-  public static create(symbol: string) {
+  public static create(symbol: PlayerSymbol): Player {
     return new Player(symbol);
   }
 }
