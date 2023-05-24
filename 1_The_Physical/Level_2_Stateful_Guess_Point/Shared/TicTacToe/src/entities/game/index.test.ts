@@ -1,10 +1,10 @@
-import { TicTacToe } from "./index";
+import { Game } from "./index";
 
 describe("Tic Tac Toe Game", () => {
-  let game: TicTacToe;
+  let game: Game;
 
   beforeEach(() => {
-    game = TicTacToe.create();
+    game = Game.create();
   });
 
   it("should be able to start a new game via the start() method", () => {
@@ -20,11 +20,13 @@ describe("Tic Tac Toe Game", () => {
   });
 
   it("should have a 3 x 3 board ", () => {
-    expect(game.board).toBeDefined();
-    expect(game.board.length).toBe(3);
-    expect(game.board[0].length).toBe(3);
-    expect(game.board[1].length).toBe(3);
-    expect(game.board[2].length).toBe(3);
+    const board = game.getBoard();
+
+    expect(board).toBeDefined();
+    expect(board.size).toBe(3);
+    expect(board.grid[0].length).toBe(3);
+    expect(board.grid[1].length).toBe(3);
+    expect(board.grid[2].length).toBe(3);
   });
 
   it("should have a player X and player O", () => {

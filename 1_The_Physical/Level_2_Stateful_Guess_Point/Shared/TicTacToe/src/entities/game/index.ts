@@ -1,47 +1,33 @@
-export class TicTacToe {
-  board: string[][];
+import { TicTacToeBoard, Board } from "../board";
+
+export class Game {
+  private board: Board;
   status: string;
   playerX: string;
   playerO: string;
 
   private constructor() {
-    this.board = [
-      ["", "", ""],
-      ["", "", ""],
-      ["", "", ""],
-    ];
+    this.board = TicTacToeBoard.create();
     this.status = "stopped";
     this.playerO = "O";
     this.playerX = "X";
   }
 
   public static create() {
-    return new TicTacToe();
+    return new Game();
   }
 
   public start() {
-    this.board = [
-      ["", "", ""],
-      ["", "", ""],
-      ["", "", ""],
-    ];
     this.status = "started";
   }
 
+  public getBoard(): Board {
+    return this.board;
+  }
+
   public stop() {
-    this.board = [
-      ["", "", ""],
-      ["", "", ""],
-      ["", "", ""],
-    ];
     this.status = "stopped";
   }
 
-  public makeMove() {
-    this.board = [
-      ["X", "", ""],
-      ["", "", ""],
-      ["", "", ""],
-    ];
-  }
+  public makeMove() {}
 }
