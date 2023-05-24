@@ -30,7 +30,7 @@ export class TicTacToeBoard implements Board {
   }
 
   public getBoardState(): string[][] {
-    return this.grid.map((row) => [...row]);
+    return this.grid;
   }
 
   reset(): void {
