@@ -29,9 +29,8 @@ describe("Tic Tac Toe Game", () => {
     expect(board.grid[2].length).toBe(3);
   });
 
-  it("should have a player X and player O", () => {
-    expect(game.playerX).toEqual("X");
-    expect(game.playerO).toEqual("O");
+  it("should have a currentPlayer property", () => {
+    expect(game.getCurrentPlayer()).toEqual({ symbol: "X" });
   });
 
   it("should be able to let player X make a move after the game starts", () => {
@@ -39,6 +38,12 @@ describe("Tic Tac Toe Game", () => {
 
     expect(game.status).toEqual("started");
 
-    game.makeMove();
+    game.makeMove(0, 0);
+
+    expect(game.getBoard().grid).toEqual([
+      ["X", "", ""],
+      ["", "", ""],
+      ["", "", ""],
+    ]);
   });
 });

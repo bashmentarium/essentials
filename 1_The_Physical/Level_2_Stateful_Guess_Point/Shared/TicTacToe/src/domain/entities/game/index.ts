@@ -1,5 +1,7 @@
-import { TicTacToeBoard, Board } from "../board";
+import { TicTacToeBoard } from "../board";
+import { Move } from "../move";
 import { Player } from "../player";
+import { Board } from "../../interfaces";
 
 export class Game {
   private board: Board;
@@ -29,7 +31,12 @@ export class Game {
   }
 
   public makeMove(row: number, column: number) {
-    const move = new Move(row, column, this.currentPlayer);
-    this.board.applyMove(move);
+    const move = new Move(row, column);
+
+    this.board.applyMove(move, this.currentPlayer.symbol);
+  }
+
+  getCurrentPlayer(): Player {
+    return this.currentPlayer;
   }
 }

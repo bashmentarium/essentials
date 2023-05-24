@@ -1,9 +1,7 @@
-import { GRID as TIC_TAC_TOE_GRID } from "../../utils";
+import { Board } from "../../interfaces/index";
+import { Move } from "../move";
 
-export interface Board {
-  grid: string[][];
-  size: number;
-}
+import { GRID as TIC_TAC_TOE_GRID } from "../../../utils";
 
 export class TicTacToeBoard implements Board {
   grid: string[][];
@@ -19,12 +17,16 @@ export class TicTacToeBoard implements Board {
     return new TicTacToeBoard(3);
   }
 
-  public applyMove(): void {
-    this.grid = [
-      ["X", "", ""],
-      ["", "", ""],
-      ["", "", ""],
-    ];
+  public applyMove(move: Move, playerSymbol: string): boolean {
+    if (!move.isValid(this)) {
+      return false;
+    }
+
+    const row = move.getRow();
+    const column = move.getColumn();
+
+    this.grid[row][column] = playerSymbol;
+    return true;
   }
 
   public getBoardState(): string[][] {
