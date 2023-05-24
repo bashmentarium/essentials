@@ -31,4 +31,12 @@ describe("Tic Tac Toe Game", () => {
     expect(game.playerX).toEqual("X");
     expect(game.playerO).toEqual("O");
   });
+
+  it("should be able to let player X make a move after the game starts", () => {
+    game.start();
+
+    expect(game.status).toEqual("started");
+
+    game.makeMove();
+  });
 });

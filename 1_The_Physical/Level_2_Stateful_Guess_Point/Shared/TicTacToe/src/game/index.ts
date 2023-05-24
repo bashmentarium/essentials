@@ -15,7 +15,6 @@ export class TicTacToe {
     this.playerX = "X";
   }
 
-  // make a factory method
   public static create() {
     return new TicTacToe();
   }
@@ -36,5 +35,13 @@ export class TicTacToe {
       ["", "", ""],
     ];
     this.status = "stopped";
+  }
+
+  public makeMove() {
+    this.board = [
+      ["X", "", ""],
+      ["", "", ""],
+      ["", "", ""],
+    ];
   }
 }

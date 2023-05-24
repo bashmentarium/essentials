@@ -7,3 +7,12 @@
 - An occupied cell can't be played on
 - Vertical line of same X or O makes the player a winner
 - If all 9 squares are filled - a draw is declared
+
+---
+
+- extract pieces of game into Board and Game
+- create a Player class
+- create and define Move and Board Value Objects
+- create and define services and factories
+- handle game rules and move validation
+- implement logic to handle game progression and END conditions
