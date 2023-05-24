@@ -2,13 +2,18 @@ export class TicTacToe {
   board: string[][];
   status: string;
 
-  constructor() {
+  private constructor() {
     this.board = [
       ["", "", ""],
       ["", "", ""],
       ["", "", ""],
     ];
     this.status = "stopped";
+  }
+
+  // make a factory method
+  public static create() {
+    return new TicTacToe();
   }
 
   public start() {
