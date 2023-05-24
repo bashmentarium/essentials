@@ -26,4 +26,9 @@ describe("Tic Tac Toe Game", () => {
     expect(game.board[1].length).toBe(3);
     expect(game.board[2].length).toBe(3);
   });
+
+  it("should have a player X and player O", () => {
+    expect(game.playerX).toEqual("X");
+    expect(game.playerO).toEqual("O");
+  });
 });

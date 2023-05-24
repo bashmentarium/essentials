@@ -1,6 +1,8 @@
 export class TicTacToe {
   board: string[][];
   status: string;
+  playerX: string;
+  playerO: string;
 
   private constructor() {
     this.board = [
@@ -9,6 +11,8 @@ export class TicTacToe {
       ["", "", ""],
     ];
     this.status = "stopped";
+    this.playerO = "O";
+    this.playerX = "X";
   }
 
   // make a factory method
