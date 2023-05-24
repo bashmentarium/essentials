@@ -20,7 +20,6 @@ export class TicTacToeBoard implements Board {
   }
 
   public applyMove(): void {
-    // Apply the move to the board
     this.grid = [
       ["X", "", ""],
       ["", "", ""],
