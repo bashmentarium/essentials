@@ -1,4 +1,5 @@
 - The board is 3 x 3 cells
+- The game can be started and stopped
 - A cell can be free or occupied (by an X or an O)
 - There are two players involved in the game
 - Each player marks cells in turns with either X or O
