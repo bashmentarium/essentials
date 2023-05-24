@@ -1,5 +1,18 @@
 import { Game } from "./index";
 
+const initialBoard = {
+  grid: [
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""],
+  ],
+  size: 3,
+
+  applyMove: expect.any(Function),
+  getBoardState: expect.any(Function),
+  reset: expect.any(Function),
+};
+
 describe("Tic Tac Toe Game", () => {
   let game: Game;
 
@@ -19,14 +32,8 @@ describe("Tic Tac Toe Game", () => {
     expect(game.status).toEqual("stopped");
   });
 
-  it("should have a 3 x 3 board ", () => {
-    const board = game.getBoard();
-
-    expect(board).toBeDefined();
-    expect(board.size).toBe(3);
-    expect(board.grid[0].length).toBe(3);
-    expect(board.grid[1].length).toBe(3);
-    expect(board.grid[2].length).toBe(3);
+  it("should have a board ", () => {
+    expect(game.getBoard()).toEqual(initialBoard);
   });
 
   it("should have a currentPlayer property", () => {
